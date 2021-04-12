@@ -14,12 +14,30 @@ Blog page
 ![blog_page](https://user-images.githubusercontent.com/46469418/114354160-22f32500-9b6e-11eb-9c10-058d08575f78.png)
 
 Project page
-
+picture ...
 
 User dashboard
+picture ...
+
+User settings
+picture ...
+
+Create post
+picture ...
+
 
 
 
 
 Admin dashboard
 ![admin_dashboard_2](https://user-images.githubusercontent.com/46469418/114353124-f094f800-9b6c-11eb-8189-9492d8a31026.png)
+
+
+Admin dashboard: edit, roles, delete, etc
+ picture ...
+
+Admin dashboard: post edit, delete
+picture ...
+
+Admin dashboard: comments, ...
+picture ...
