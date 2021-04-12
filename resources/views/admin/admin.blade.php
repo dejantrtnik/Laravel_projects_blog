@@ -209,83 +209,10 @@ card{
 <hr>
 
 
-<?php
-//print_r($countryMonthCountJson);
-//echo "<pre>";
-//$array = array($countryMonthCountJson);
-//
-$data = [];
-$var = json_decode($countryMonthCountJson);
-$j = 0;
-$i = 0;
-//$person = json_decode($countryMonthCountJson);
-
-//echo $person->country;
-
-//while ($i <= $j) {
-//  $i + 1;
-//  $j + 1;
-//
-//  //print_r($i);
-//}
-
-
-
-
-
-//echo $var[1]->country;
-//echo $array;
-//echo "<br>";
-//echo preg_replace('/[^a-z0-9"",_]/i', '', str_replace('country', '', $countryMonthCountJson));
- //preg_replace("/[^a-z0-9_]/i", '', 'New_text % *');
-//foreach ($countryMonthCountJson as $value) {
-//  //$value = [];
-//  //echo json_encode($value->country);
-//  //print_r($value);
-//}
-
-//array_push($data, array('country' => $var[0]->country));
-
-//print_r($data);
-?>
-<?php foreach ($var as $key => $value) {echo '""'.$value->country. '""';}?>
-
-<canvas id="countryChart" ></canvas>
 <canvas id="usersChart" width="300" height="100"></canvas>
 <hr>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.0/Chart.min.js"></script>
-<script>
-var ctx = document.getElementById("countryChart");
-var myChart = new Chart(ctx, {
-  type: 'pie',
-  data: {
-    labels: [
-    ],
-    datasets: [{
-      label: '# of Tomatoes',
-      data: <?= $users_per_month ?>,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)'
-      ],
-      borderColor: [
-        'rgba(255,99,132,1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)'
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-   	//cutoutPercentage: 40,
-    responsive: false,
 
-  }
-});
-</script>
 <script>
   var ctx = document.getElementById('usersChart').getContext('2d');
   var myChart = new Chart(ctx, {

@@ -62,13 +62,13 @@ class AdminController extends Controller
       function countryMonthCountJson(){
         //$country = [];
         //dd($country);
-      //$country = DB::select("SELECT country FROM ip_infos GROUP by country");
+      $country = DB::select("SELECT country FROM ip_infos GROUP by country");
       //$country = array();
 
-      $country = DB::table('ip_infos')
-                 ->select('country', DB::raw('count(*) as count'))
-                 ->groupBy('country')
-                 ->get();
+      //$country = DB::table('ip_infos')
+      //           ->select('country', DB::raw('count(*) as count'))
+      //           ->groupBy('country')
+      //           ->get();
         return json_encode($country);
       }
 
