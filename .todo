@@ -1,0 +1,18 @@
+work todo:
+
+
+1. /var/www/html/app/Http/Controllers/PagesController.php
+  - ip
+  - dashboard home/landing page
+
+2. /var/www/html/app/Http/Controllers/PostsController.php
+  - edit code ( make beauty )
+
+3. /var/www/html/app/Http/Controllers/ProjectController.php
+  - a lot work
+
+4. /var/www/html/app/Http/Controllers/SessionController.php
+  - test
+
+5. /var/www/html/app/Http/Controllers/UserController.php
+  - edit code ( make beauty )

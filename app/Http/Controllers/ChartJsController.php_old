@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\User;
+use App\Models\visits;
+use App\Models\ipInfos;
+use DB;
+use Carbon\Carbon;
+
+class ChartJsController extends Controller
+{
+    public function index()
+    {
+
+
+        $data = [
+          'posts' => Post::all(),
+          'user' => User::all(),
+          'ip_count' => visits::all(),
+          'months' => json_encode([
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+          ])
+        ];
+        //dd($data);
+    	return view('admin.chartjs')->with($data);
+    }
+}

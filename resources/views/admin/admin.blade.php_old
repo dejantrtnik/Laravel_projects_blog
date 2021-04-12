@@ -1,0 +1,5 @@
+@extends('layouts.admin_app')
+
+@section('body')
+  @include('inc/admin_sidebar')
+@endsection
