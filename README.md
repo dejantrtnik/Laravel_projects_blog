@@ -29,9 +29,8 @@ picture ...
 
 
 
-Admin dashboard
-![admin_dashboard_2](https://user-images.githubusercontent.com/46469418/114353124-f094f800-9b6c-11eb-8189-9492d8a31026.png)
-
+Admin dashboard 
+![admin_dashboard_3](https://user-images.githubusercontent.com/46469418/114667288-94aea880-9cff-11eb-93b7-fc8c778d1c6e.png)
 
 Admin dashboard: edit, roles, delete, etc
  picture ...
