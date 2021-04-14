@@ -80,6 +80,15 @@ class CommentsController extends Controller
 
     public function destroy($id)
     {
-        //
+      // check for correct user
+      // check for correct user
+      //dd($Comment);
+
+      if(auth()->user()->role == 'admin'){
+        $Comment = Comments::find($id);
+        $Comment->delete();
+        return redirect( url()->previous() )->with('success', 'Comment deleted');
+      }
+      return redirect('/')->with('error', 'Unauthorized page');
     }
 }

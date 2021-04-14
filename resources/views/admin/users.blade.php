@@ -32,32 +32,33 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </thead>
     </tr>
+
     @foreach ($users as $user)
         <tr>
             <th>{{ $user->id }}</th>
             <th>{{ $user->name }}</th>
-            <form class="" action="{{ route('edit_role',  $user->id) }}" method="get">
-              @csrf
-              <input type="text" name="id" value="{{ $user->id }}" hidden>
-              <th>
-                <select class="form-control" action="" name="role">
-                  <option style="color: red;" name="role" value="{{ $user->role }}">{{ $user->role }}</option>
-                  <option value=""></option>
-                  <option style="color: red;" name="role" value="guest">guest</option>
-                  <option name="role" value="member">member</option>
-                  <option name="role" value="admin">admin</option>
-                </select>
 
-              </th>
-              <th><button type="submit" class="btn btn-danger">Confirm role</button> </th>
-
-            </form>
 
             <th><a href="/user/{{ $user->id }}" class="btn btn-primary">Show profile</a></th>
             <th><a href="/admin/show/{{ $user->id }}" class="btn btn-primary">Show posts by user</a></th>
             @if ( $user->role != "admin" )
+              <form class="" action="{{ route('edit_role',  $user->id) }}" method="get">
+                @csrf
+                <input type="text" name="id" value="{{ $user->id }}" hidden>
+                <th>
+                  <select class="form-control" action="" name="role">
+                    <option style="color: red;" name="role" value="{{ $user->role }}">{{ $user->role }}</option>
+                    <option value=""></option>
+                    <option style="color: red;" name="role" value="guest">guest</option>
+                    <option name="role" value="member">member</option>
+                    <option name="role" value="admin">admin</option>
+                  </select>
+                </th>
+                <th><button type="submit" class="btn btn-danger">Confirm role</button> </th>
+              </form>
               <th><a
                 href="{{ route('user.delete', $user->id) }}"
                 class="btn btn-danger"
@@ -65,6 +66,8 @@
               </th>
 
               @else
+                <th></th>
+                <th></th>
                 <th></th>
             @endif
         </tr>

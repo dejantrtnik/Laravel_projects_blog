@@ -28,9 +28,20 @@ class PagesController extends Controller
       'ip' => request()->server('SERVER_ADDR'),
       'request_url' => request()->server('REQUEST_URI'),
       'temp_data_rpi' => file_get_contents('http://192.168.0.147/moduliRPI/sensor_H2O.php'),
+      //'temp_data_rpi' => 'temp',
     ];
 
     return view('pages.index')->with($data);
+  }
+
+  public function info()
+  {
+    $data = [
+    'title' => 'ones',
+    //'php_info' => phpInfo(),
+    ];
+    //return view('pages.services');
+    return view('admin/info_server')->with($data);
   }
 
   public function about()

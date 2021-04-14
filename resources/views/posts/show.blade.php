@@ -13,17 +13,14 @@ foreach ($comments as $key => $comment) {
   }
 }
 @endphp
-
 @section('body')
   <div class="container">
     <hr>
     <a class="btn btn-primary" href="/posts">Back</a>
     @if (!Auth::guest())
       @if (Auth::user()->id == $post->user_id || auth()->user()->role == 'admin' )
-
         <a href="{{ route('posts.delete', $post->id) }}" class="btn btn-danger float-right ml-2" onclick="return confirm('Are you sure you want to delete this post? \n{{ $post->title }}');">Delete</a>
         <a class="btn btn-success float-right ml-2" href="/posts/{{ $post->id }}/edit">Edit</a>
-
       @endif
     @endif
     <hr>
@@ -54,7 +51,6 @@ foreach ($comments as $key => $comment) {
       <hr>
     @endif
   @endforeach
-
   @if (!Auth::guest())
     <div class="container">
       Write comment
@@ -77,19 +73,16 @@ foreach ($comments as $key => $comment) {
         </div>
       </form>
       <br><hr>
-
       <script src="/vendor/ckeditor/ckeditor/ckeditor.js"></script>
       <script>
-      //CKEDITOR.replace( 'editor-post' );
-      CKEDITOR.replace('editor-post',{
-        wordcount: {
-          showCharCount: true,
-          maxCharCount: 500
-        }
-      });
+        //CKEDITOR.replace( 'editor-post' );
+        CKEDITOR.replace('editor-post',{
+          wordcount: {
+            showCharCount: true,
+            maxCharCount: 500
+          }
+        });
       </script>
-
     </div>
-
   @endif
 @endsection

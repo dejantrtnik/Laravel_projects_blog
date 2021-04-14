@@ -46,6 +46,33 @@
 <p>No post</p>
 @endif
 
+<hr>
+<h3>Comments</h3>
+@if (count($comments) > 0)
+  <table class="table table-striped">
+    <tr>
+      <thead>
+        <th>id</th>
+        <th>Comment</th>
+        <th></th>
+        <th></th>
+      </thead>
+    </tr>
+    @foreach ($comments as $comment)
+      <tr>
+        <th>{{ $comment->user->name }}</th>
+        <th><a href="#/posts/{{ $comment->id }}">{!! $comment->comment !!}</a></th>
+        <th><a href="#/posts/{{ $comment->id }}/edit" class="btn btn-primary">Edit</a></th>
+        <th><a href="{{ route('comment.delete', $comment->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post? \n{{ $comment->id }}');">Delete</a></th>
+
+      </tr>
+    @endforeach
+  </table>
+  {{ $comments->links() }}
+@else
+  <p>No Comments</p>
+@endif
+
 
 
 

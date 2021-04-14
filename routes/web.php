@@ -39,18 +39,24 @@ Route::get('session/remove','App\Http\Controllers\SessionController@deleteSessio
 Route::get('/admin', 'App\Http\Controllers\AdminController@index')->name('admin');
 Route::get('/admin/users', 'App\Http\Controllers\AdminController@users')->name('users');
 Route::get('/admin/posts', 'App\Http\Controllers\AdminController@posts')->name('posts');
-Route::get('/admin/comments', 'App\Http\Controllers\CommentsController@index')->name('admin.comments');
-Route::get('/admin/project/', 'App\Http\Controllers\ProjectController@show')->name('project');
+Route::get('/admin/show/{id}', 'App\Http\Controllers\AdminController@show')->name('show');
+Route::get('/admin/edit_role/{role}', 'App\Http\Controllers\AdminController@edit_role')->name('edit_role');
 
+
+Route::get('/admin/project/', 'App\Http\Controllers\ProjectController@show')->name('project');
 Route::get('/admin/chartjs', [ChartJsController::class, 'index'])->name('chartjs');
 Route::get('/admin/chartjs_country/{ipStrlen}', [ChartJsController::class, 'show_country'])->name('chartjs_country');
-Route::get('/admin/show/{id}', 'App\Http\Controllers\AdminController@show')->name('show');
 
-Route::get('/admin/edit_role/{role}', 'App\Http\Controllers\AdminController@edit_role')->name('edit_role');
+//Route::get('/admin/info_server', [PagesController::class, 'info'])->name('info_server')
+Route::get('/admin/info_server', 'App\Http\Controllers\PagesController@info')->name('info_server');
+
 
 // comments
 Route::post('/admin/', 'App\Http\Controllers\CommentsController@store')->name('comment.store');
+Route::get('/admin/comments', 'App\Http\Controllers\CommentsController@index')->name('admin.comments');
 Route::post('/posts/{id}', 'App\Http\Controllers\CommentsController@store')->name('posts.show');
+
+Route::get('/admin/{id}/destroy', 'App\Http\Controllers\CommentsController@destroy')->name('comment.delete');
 
 // search
 Route::get('users/search/', 'App\Http\Controllers\UserController@search')->name('search_user');

@@ -13,7 +13,7 @@
   <h3>Posts</h3>
   <a class="btn btn-primary" href="{{ URL::previous() }}">Back</a>
   <hr>
-  @if (count($posts) > 0)
+  @if (count($comments) > 0)
     <table class="table table-striped">
       <tr>
         <thead>
@@ -23,12 +23,12 @@
           <th></th>
         </thead>
       </tr>
-      @foreach ($posts as $post)
+      @foreach ($comments as $comment)
         <tr>
-          <th>{{ $post->id }}</th>
-          <th><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></th>
-          <th><a href="/posts/{{ $post->id }}/edit" class="btn btn-primary">Edit</a></th>
-          <th><a href="{{ route('posts.delete', $post->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post? \n{{ $post->title }}');">Delete</a></th>
+          <th>{{ $comment->id }}</th>
+          <th><a href="/posts/{{ $comment->id }}">{{ $comment->id }}</a></th>
+          <th><a href="/posts/{{ $comment->id }}/edit" class="btn btn-primary">Edit</a></th>
+          <th><a href="{{ route('comment.delete', $comment->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post? \n{{ $comment->id }}');">Delete</a></th>
 
         </tr>
       @endforeach

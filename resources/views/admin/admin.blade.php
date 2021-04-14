@@ -19,7 +19,7 @@ card{
   @php
 
 
-@endphp
+  @endphp
 
   @php
   if (count($users_count) > 0) {
@@ -68,34 +68,66 @@ card{
   <!-- Statistic -->
   <div class="row">
     <div class="col-sm-3">
-      <h2>Users statistics: </h2>
-      <p>
-        Admins:
-        @foreach ($users_admin as $key => $admin)
-          <li>
-            {{ $admin->name }} <br>
-          </li>
-        @endforeach
-        <hr>
-        Last registered Guest:
-        @foreach ($users_guest as $key => $guest)
-          <li>
-            {{ $guest->name }} <br>
-          </li>
-        @endforeach
-        <hr>
-        Members roles:
+      Admins:
+      @foreach ($users_admin as $key => $admin)
         <li>
-          {{ count($users_member) }}
+          {{ $admin->name }} <br>
         </li>
-        <hr>
-        Members registered: <br>
-        Posts published: <br>
-      </p>
+      @endforeach
+      <hr>
     </div>
+    <div class="col-sm-3">
+      Last registered Guest:
+      @foreach ($users_guest as $key => $guest)
+        <li>
+          {{ $guest->name }} <br>
+        </li>
+      @endforeach
+      <hr>
+      Members roles:
+      <li>
+        {{ count($users_member) }}
+      </li>
+      <hr>
+      Members registered: <br>
+      Posts published: <br>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
     <div class="card-deck">
+
       <div class="card p-2" style="width: 20rem;">
-        <h5 class="card-header text-white bg-dark border-dark ">Members</h5>
+        @if (count($users_guest) > 0)
+          <a href="/admin/users"><h5 class="card-header text-dark bg-warning border-warning ">Member request</h5></a>
+        @else
+          <h5 class="card-header text-light bg-dark border-dark ">Member request</h5>
+        @endif
+        <div class="card-body">
+          <h3>{{ count($users_guest) }}</h3>
+          <p class="card-text"><small class="text-muted"></small></p>
+          Last registered guest:
+          {{ count($users_guest) }}
+          @foreach ($users_guest as $key => $guest)
+            <li>
+              {{ $guest->name }} <br>
+            </li>
+          @endforeach
+        </div>
+        <a href="/admin/users">show details</a>
+        <div class="card-footer bg-transparent border-dark">
+          <small>Last registered</small><br>
+          Last registered Guest:
+          @foreach ($users_guest as $key => $guest)
+            <li>
+              {{ $guest->name }} <br>
+            </li>
+          @endforeach
+        </div>
+      </div>
+
+      <div class="card p-2" style="width: 20rem;">
+        <a href="/admin/users"><h5 class="card-header text-white bg-dark border-dark ">Registered</h5></a>
         <div class="card-body">
           <h3>{{ $users - 1 }}</h3>
           <a href="/admin/users">show details</a>
@@ -105,14 +137,15 @@ card{
         <div class="card-footer bg-transparent border-dark">
           <small>Last registered</small><br>
           @if ($posts == 'no posts')
-            @else
-              <small>{{ $last_registered_date }}</small><br>
-              <small>User: {{ $last_registered->name }}</small>
+          @else
+            <small>{{ $last_registered_date }}</small><br>
+            <small>User: {{ $last_registered->name }}</small>
           @endif
         </div>
       </div>
+
       <div class="card p-2 style="width: 18rem;"">
-        <div class="card-header text-white bg-info border-info">Posts</div>
+        <a href="/admin/posts"><h5 class="card-header text-white bg-info border-info">Posts</h5></a>
         <div class="card-body">
           <h3>{{ $posts }}</h3>
           <a href="/admin/posts">show details</a>
@@ -121,14 +154,15 @@ card{
         <div class="card-footer bg-transparent border-info">
           <small>Last created post</small><br>
           @if ($posts == 'no posts')
-            @else
-              <small>{{ $last_post_date }}</small><br>
-              <small>Post: {{ $last_post->title }}</small>
+          @else
+            <small>{{ $last_post_date }}</small><br>
+            <small>Post: {{ $last_post->title }}</small>
           @endif
         </div>
       </div>
+
       <div class="card p-2 style="width: 18rem;"">
-        <div class="card-header text-white bg-secondary border-secondary">Comments</div>
+        <a href="/admin/comments"><h5 class="card-header text-white bg-secondary border-secondary">Comments</h5></a>
         <div class="card-body">
           <h3>{{ count($comments) }}</h3>
           <a href="/admin/comments">show details</a>
@@ -137,21 +171,19 @@ card{
         <div class="card-footer bg-transparent border-secondary">
           <small>Last writted comment</small><br>
           @if ($posts == 'no posts')
+          @else
+            @if (empty($last_comment->created_at))
             @else
-              @if (empty($last_comment->created_at))
-                @else
-                  <small>{{ $last_comment_date }}</small><br>
-                  <small>Last comment write:<a href="/user/{{ $last_comment->user->id }}">{{ $last_comment->user->name }}</small></a>
-              @endif
+              <small>{{ $last_comment_date }}</small><br>
+              <small>Last comment write:<a href="/user/{{ $last_comment->user->id }}">{{ $last_comment->user->name }}</small></a>
+            @endif
           @endif
-
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
   <hr>
-
 
   <div class="row">
     <div class="col-sm-3">
@@ -176,7 +208,6 @@ card{
         <div class="card-body">
           <h3>{{ $ip }}</h3>
           <small>Select country</small><br>
-
           <select name="form" onchange="javascript:handleSelect(this)">
             <option value=""></option>
             @foreach ($countries as $key => $country)
@@ -188,9 +219,6 @@ card{
         <div class="card-footer bg-transparent border-primary"></div>
       </div>
 
-      <div class="card p-2 style="width: 18rem;"">
-      </div>
-
     </div>
   </div>
   <script type="text/javascript">
@@ -199,7 +227,6 @@ card{
       window.location = elm.value;
     }
   </script>
-
 </div>
 <hr>
 <h3>Registered users per month</h3>
@@ -208,11 +235,9 @@ card{
 @endphp
 <hr>
 
-
 <canvas id="usersChart" width="300" height="100"></canvas>
 <hr>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.0/Chart.min.js"></script>
-
 <script>
   var ctx = document.getElementById('usersChart').getContext('2d');
   var myChart = new Chart(ctx, {
@@ -262,8 +287,4 @@ card{
     }
   });
 </script>
-
-
-
-
 @endsection

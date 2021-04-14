@@ -120,19 +120,11 @@ class AdminController extends Controller
     //dd($data);
     public function edit_role(request $role)
     {
-
-
-
       $user = User::find($role['id']);
-
       //dd($user);
-
       $user->role = $role['role'];
       $user->save();
-
       return redirect('/admin/users')->with('success', 'Role added - '. $role['role'] );
-
-
     }
 
 
@@ -145,6 +137,7 @@ class AdminController extends Controller
         'users_guest' => DB::select("SELECT * FROM users WHERE role = 'guest'"),
         'users_member' => DB::select("SELECT * FROM users WHERE role = 'member'"),
         'password_resets' => DB::select("SELECT * FROM password_resets"),
+        'comments' => Comments::All(),
         ];
 
         return view('admin.users')->with($data);
@@ -158,6 +151,7 @@ class AdminController extends Controller
         $data = [
         'posts' => Post::orderBy('id', 'desc')->paginate(5),
         'post_by_user' => Post::all(),
+        'comments' => Comments::orderBy('id', 'asc')->paginate(5),
         ];
 
         return view('admin.posts')->with($data);
@@ -181,6 +175,16 @@ class AdminController extends Controller
       }
       return redirect('/dashboard')->with('error', 'Unauthorized page');
     }
+
+    public function info_server()
+    {
+      $data = [
+      'title' => 'info_server',
+      ];
+      //dd($data);
+      return redirect('admin/info_server')->with($data);
+    }
+
 
     public function graf()
     {
