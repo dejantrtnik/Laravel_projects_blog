@@ -13,31 +13,30 @@ Home page
 Blog page
 ![blog_page](https://user-images.githubusercontent.com/46469418/114354160-22f32500-9b6e-11eb-9c10-058d08575f78.png)
 
-Project page
+Project page\
 picture ...
 
-User dashboard
+User dashboard\
 picture ...
 
-User settings
+User settings\
 picture ...
 
-Create post
+Create post\
 picture ...
 
 
 
 
 
-Admin dashboard 
+Admin dashboard
 ![admin_dashboard_3](https://user-images.githubusercontent.com/46469418/114667288-94aea880-9cff-11eb-93b7-fc8c778d1c6e.png)
 
-Admin dashboard: edit, roles, delete, etc
+Admin dashboard: edit, roles, delete, etc\
  picture ...
 
-Admin dashboard: post edit, delete
+Admin dashboard: post edit, delete\
 picture ...
 
 Admin dashboard: comments, ...
 ![admin_dashboard_comments](https://user-images.githubusercontent.com/46469418/114666878-16520680-9cff-11eb-912d-166b3f12fa7b.png)
-
