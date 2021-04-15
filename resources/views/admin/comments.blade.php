@@ -59,7 +59,6 @@ thead{
               <th>{{ $user->name}}</th>
               <th>{{ $post->user->name }}</th>
               <th>
-
                 <a
                 href="{{ route('comment.delete', $comment->id) }}"
                 class=""
@@ -73,10 +72,7 @@ thead{
       @endif
     @endforeach
   </tr>
-
 @endforeach
 </tbody>
 </table>
-
-
 @endsection

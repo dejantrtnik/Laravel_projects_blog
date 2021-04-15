@@ -23,6 +23,7 @@ class PagesController extends Controller
     */
     ip_collect();
 
+
     $data = [
       'title' => 'This is about',
       'ip' => request()->server('SERVER_ADDR'),
@@ -31,8 +32,10 @@ class PagesController extends Controller
       //'temp_data_rpi' => 'temp',
     ];
 
+    //dd(ip_collect());
     return view('pages.index')->with($data);
   }
+
 
   public function info()
   {
@@ -42,6 +45,24 @@ class PagesController extends Controller
     ];
     //return view('pages.services');
     return view('admin/info_server')->with($data);
+  }
+
+  public function maintenance()
+  {
+    /*
+    |--------------------------------------------------------------------------
+    | ip_collect()
+    |--------------------------------------------------------------------------
+    | /var/www/html/config/custom_functions.php
+    | collecting ip numbers in db
+    */
+    ip_collect();
+    $data = [
+    'title' => 'maintenance',
+    //'php_info' => phpInfo(),
+    ];
+    //return view('pages.services');
+    return view('pages/maintenance')->with($data);
   }
 
   public function about()
@@ -56,7 +77,7 @@ class PagesController extends Controller
     ip_collect();
 
     $data = [
-      'title' => 'This is about',
+      'title' => 'Welcome',
       'users' => User::all(),
       'request_url' => request()->server('REQUEST_URI'),
     ];
@@ -86,11 +107,12 @@ class PagesController extends Controller
     $bot = env('BOT');
     $id = env('ID');
     $message =
-    '🪐👽‌[Laravel]: 👽🪐'             ."\n".
-    'Name: '    .$msg['name']            ."\n".
-    'Email: '   .$msg['email']           ."\n".
-    'Subject: ' .$msg['subject']            ."\n".
-    'Date: '    .date("H:i:s ( d-m-Y )") ."\n".
+    '🪐👽‌[Laravel]: 👽🪐'               ."\n".
+    'Name: '       .$msg['name']            ."\n".
+    'Email: '      .$msg['email']           ."\n".
+    'Subject: '    .$msg['subject']         ."\n".
+    'Date: '       .date("H:i:s ( d-m-Y )") ."\n".
+    'Ip address: ' .request()->server('REMOTE_ADDR')."\n".
     'Msg: '     .$msg['body'];
 
     $url = 'https://api.telegram.org/bot'. $bot . '/sendMessage';

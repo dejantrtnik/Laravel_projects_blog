@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\visits;
 use App\Models\ipInfos;
 use App\Models\Comments;
+use App\Models\WhiteList;
+use App\Models\BlackList;
 use DB;
 
 class AdminController extends Controller
@@ -20,6 +22,7 @@ class AdminController extends Controller
 
   public function index()
   {
+    //dd(base_path());
 
     function userMonthCountJson(){
       $dates = array(
@@ -78,6 +81,8 @@ class AdminController extends Controller
         return $users_count;
       }
 
+      //dd(geoapify('192.168.0.350'));
+
       if (auth()->user()->role == 'admin') {
         $data = [
         'users' => User::orderBy('id', 'asc')->paginate(5),
@@ -96,6 +101,10 @@ class AdminController extends Controller
         'users_guest' => DB::select("SELECT * FROM users WHERE role = 'guest' ORDER BY created_at DESC LIMIT 1"),
         'users_member' => DB::select("SELECT * FROM users WHERE role = 'member'"),
         'countryMonthCountJson' => countryMonthCountJson(),
+        'white_list' => WhiteList::All(),
+        'black_list' => BlackList::All(),
+        'ipwhois' => ipwhois('192.168.0.350'),
+        'geoapify' => geoapify('192.168.0.350'),
         'months' => json_encode([
         'January',
         'February',
@@ -126,6 +135,74 @@ class AdminController extends Controller
       $user->save();
       return redirect('/admin/users')->with('success', 'Role added - '. $role['role'] );
     }
+
+    public function white_list(request $list)
+    {
+      $whiteList = WhiteList::where('ip', $list['white_list_ip'])->exists();
+      $blackList = BlackList::where('ip', $list['white_list_ip'])->exists();
+
+      if ($blackList == true) {
+        return redirect('/admin')->with('error', 'IP exist in BLACK list database - '. $list['white_list_ip'] );
+      }
+      if ($whiteList == true) {
+        return redirect('/admin')->with('error', 'IP already exist in database - '. $list['white_list_ip'] );
+      }
+      $white_list = new WhiteList();
+      $white_list->ip = $list['white_list_ip'];
+      $white_list->save();
+      return redirect('/admin')->with('success', 'Ip added - '. $list['white_list_ip'] );
+    }
+
+    public function black_list(request $list)
+    {
+      $blackList = BlackList::where('ip', $list['black_list_ip'])->exists();
+      $whiteList = WhiteList::where('ip', $list['black_list_ip'])->exists();
+
+      if ($whiteList == true) {
+        return redirect('/admin')->with('error', 'IP exist in WHITE list database - '. $list['black_list_ip'] );
+      }
+      if ($blackList == true) {
+        return redirect('/admin')->with('error', 'IP already exist in database - '. $list['black_list_ip'] );
+      }
+      $blackList = new BlackList();
+      $blackList->ip = $list['black_list_ip'];
+      $blackList->save();
+
+
+      $blackListQuery = BlackList::all();
+      $ht =
+'<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+    RewriteEngine On
+    <FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+    </FilesMatch>
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>';
+      Storage::disk('public_custom')->put('.htaccess', $ht);
+      foreach ($blackListQuery as $key => $value) {
+        Storage::disk('public_custom')->append('.htaccess', 'Deny from '.$value->ip);
+      }
+      return redirect('/admin')->with('success', 'Ip added - '. $list['black_list_ip'] );
+    }
+
+
 
 
     public function users()

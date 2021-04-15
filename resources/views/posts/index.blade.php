@@ -248,7 +248,7 @@
         <div class="col-lg-4">
           <h2>{{ config('app.name') }}</h2>
           <p>
-            Lorem ipsum is the best
+            We are the best
           </p>
           <a href="/about" class="btn btn-outline-success btn-lg">Read more</a>
         </div>

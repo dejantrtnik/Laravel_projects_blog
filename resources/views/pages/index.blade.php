@@ -53,7 +53,7 @@ ini_set('memory_limit', '25M');
           <div class="col-lg-6">
             <h2>{{ config('app.name') }}</h2>
             <p>
-              Webpage, Api project - etc...
+              Webpage build,
             </p>
             <a href="/about" class="btn btn-outline-success btn-lg">About</a>
           </div>
@@ -76,7 +76,6 @@ ini_set('memory_limit', '25M');
                 </div>
               </div>
             </div>
-
 
           </div>
         </div>
@@ -107,15 +106,16 @@ ini_set('memory_limit', '25M');
           <h5 class="card-title">Detailed info about ip address</h5>
           <p class="card-text"></p>
           <ul>
-            <li>Your ip address: <span style="color: rgb(68, 187, 57);">{{ Request::server('SERVER_ADDR') }}</span></li>
+            <li>Your ip address: <span style="color: rgb(68, 187, 57);">{{ Request::server('REMOTE_ADDR') }}</span></li>
             <li>Location</li>
             <li>openMapStreet</li>
           </ul>
           <a href="/custom/sites/iplocation/" class="btn btn-primary">Show detail</a>
         </div>
       </div>
+      <hr>
 
-
+<!--
       <hr>
       <div class="card">
         <div class="card-header">
@@ -161,10 +161,10 @@ ini_set('memory_limit', '25M');
           <a href="#" class="btn btn-primary">Read more</a>
         </div>
       </div>
-
+-->
 
     </div>
 
-    <hr><br>
 
+    <hr><br>
   @endsection

@@ -17,11 +17,6 @@ card{
 ?>
 @section('body')
   @php
-
-
-  @endphp
-
-  @php
   if (count($users_count) > 0) {
     $users = count($users_count);
   }else {
@@ -57,8 +52,11 @@ card{
 <div class="row">
   <div class="col-sm-6">
     <h1>Admin dashboard</h1>
+    <small style="color: red;">{{ request()->server('REMOTE_ADDR') }}</small>
   </div>
   <div class="col-sm-6">
+
+
 
     <h1></h1>
   </div>
@@ -92,6 +90,56 @@ card{
       Members registered: <br>
       Posts published: <br>
     </div>
+    <div class="col-sm-3">
+      <div class="row">
+        <div class="col-sm-12" style="overflow: scroll; width: 100px; height: 200px;">
+          White list ip:
+          @foreach ($white_list as $key => $list)
+            <li>
+              {{ $list->ip }}
+              <a href="{{ route('ip_white.delete', $list->ip) }}"
+                onclick="return confirm('Are you sure you want to delete this post? \n{{ $list->ip }}');">
+                <i class="fas fa-trash"></i>
+              </a>
+            </li>
+          @endforeach
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <form class="" action="{{ route('white_list') }}" method="post">
+            @csrf
+            <input type="text" name="white_list_ip" placeholder="add ip ..." value="">
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+        <div class="col-sm-12" style="overflow: scroll; width: 100px; height: 200px;">
+          Black list ip:
+          @foreach ($black_list as $key => $list)
+            <li>
+              {{ $list->ip }}
+              <a href="{{ route('ip.delete', $list->ip) }}"
+                onclick="return confirm('Are you sure you want to delete this post? \n{{ $list->ip }}');">
+                <i class="fas fa-trash"></i>
+              </a>
+
+            </li>
+          @endforeach
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <form class="" action="{{ route('black_list') }}" method="post">
+            @csrf
+            <input type="text" name="black_list_ip" placeholder="add ip to black list" value="">
+          </form>
+        </div>
+      </div>
+    </div>
+
   </div>
   <hr>
   <div class="row">

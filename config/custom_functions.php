@@ -1,6 +1,10 @@
 <?php
 use App\Models\ipInfos;
 use App\Models\visits;
+use App\Models\WhiteList;
+use App\Models\BlackList;
+
+
 
 function remove_accent($str)
 {
@@ -29,36 +33,55 @@ function geoapify($ip){
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   $json = curl_exec($ch);
   curl_close($ch);
-  $ipwhois_result = json_decode($json, true);
-  return $ipwhois_result;
+  $geoapify_result = json_decode($json, true);
+  return $geoapify_result;
 }
 
+function ip_block(){
+  $ip = request()->server('REMOTE_ADDR');
+  //$ip = '192.168.0.100';
 
+  $ipBlock = new BlackList;
+  $ipBlock = BlackList::where('ip', $ip)->exists();
+
+}
+//ip_block();
 
 function ip_collect(){
-  $ip = request()->server('SERVER_ADDR');
+  //$ip = request()->server('REMOTE_ADDR');
   $request_url = request()->server('REQUEST_URI');
   //$ip = '79.106.34.2';
   //$ip = '66.249.64.227';
   //$ip = '193.77.83.59';
   //$ip = '51.38.33.36';
+  $ip = '192.168.0.100';
 
-
+  $ipInfo = new WhiteList;
   $ipInfo = new ipInfos;
   $visits = new visits;
-  if (ipInfos::where('ipStrlen', post_slug($ip))->exists()) {
-    //$ipQuery = ipInfos::where('ipStrlen', post_slug($ip))->get();
+  $blackList = new BlackList;
 
-    $ipQuery = 'exist';
-    $ipQuery = 'ipwhois';
-    $data = ipwhois($ip);
-    $visits->ipStrlen    = post_slug($ip);
-    $visits->request_url = ($request_url);
-    $visits->save();
-  }elseif ($ip == '192.168.0.120') {
-    $ipQuery = 'local';
+  $blackList = BlackList::where('ip', $ip)->exists();
+  $whiteList = WhiteList::where('ip', $ip)->exists();
+
+
+
+  if (ipInfos::where('ipStrlen', post_slug($ip))->exists()) {
+    if ($whiteList == true) {
+      /*
+      |--------------------------------------------------------------------------
+      | white list
+      |--------------------------------------------------------------------------
+      | check if exist in white_list table
+      |
+      */
+    }else {
+      $visits->ipStrlen    = post_slug($ip);
+      $visits->request_url = ($request_url);
+      $visits->save();
+    }
   }else {
-    if ( ipwhois($ip) != null ) {
+    if ( ipwhois($ip) != null && ipwhois($ip)['success'] == true) {
       $ipQuery = 'ipwhois';
       $data = ipwhois($ip);
       $ipInfo->ipStrlen   = post_slug($data['ip']);
@@ -67,7 +90,7 @@ function ip_collect(){
       $ipInfo->city       = $data['city'];
       $ipInfo->latitude	  = $data['latitude'];
       $ipInfo->longitude  = $data['longitude'];
-    }elseif ( geoapify($ip) != null ) {
+    }elseif ( geoapify($ip) != null && geoapify($ip)['statusCode'] != 400) {
       $ipQuery = 'geoapify';
       $data = geoapify($ip);
       $ipInfo->ipStrlen   = post_slug($data['ip']);
@@ -76,7 +99,15 @@ function ip_collect(){
       $ipInfo->city       = $data['country']['capital'];
       $ipInfo->latitude	  = $data['location']['latitude'];
       $ipInfo->longitude  = $data['location']['longitude'];
+    }elseif (ipwhois($ip)['success'] == false || geoapify($ip)['statusCode'] == 400) {
+      if (ipwhois($ip)['message'] == 'invalid IP address') {
+        $data = ipwhois($ip);
+        $ipInfo->ipStrlen   = post_slug($ip);
+      }elseif (geoapify($ip)['message'] == '"ip" must be a valid ip address with a optional CIDR') {
+        $data = geoapify($ip);
+        $ipInfo->ipStrlen   = post_slug($ip);
+      }
     }
-      $ipInfo->save();
+    $ipInfo->save();
   }
 }

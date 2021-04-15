@@ -41,6 +41,8 @@ Route::get('/admin/users', 'App\Http\Controllers\AdminController@users')->name('
 Route::get('/admin/posts', 'App\Http\Controllers\AdminController@posts')->name('posts');
 Route::get('/admin/show/{id}', 'App\Http\Controllers\AdminController@show')->name('show');
 Route::get('/admin/edit_role/{role}', 'App\Http\Controllers\AdminController@edit_role')->name('edit_role');
+Route::post('/admin/white_list', 'App\Http\Controllers\AdminController@white_list')->name('white_list');
+Route::post('/admin/black_list', 'App\Http\Controllers\AdminController@black_list')->name('black_list');
 
 
 Route::get('/admin/project/', 'App\Http\Controllers\ProjectController@show')->name('project');
@@ -66,6 +68,9 @@ Route::get('posts/search/', 'App\Http\Controllers\PostsController@search')->name
 Route::get('/admin/ip/', [IpController::class, 'index']);
 Route::get('/admin/ip/{ipStrlen}', [IpController::class, 'show']);
 
+Route::get('/admin/{id}/destroy', 'App\Http\Controllers\IpController@destroy')->name('ip.delete');
+Route::get('/admin/{id}/destroy_white_list', 'App\Http\Controllers\IpController@destroy_white_list')->name('ip_white.delete');
+
 
 // user
 Route::get('/user', [UserController::class, 'index']);
@@ -88,6 +93,8 @@ Route::get('/', [PagesController::class, 'index']);
 Route::get('/about', [PagesController::class, 'about']);
 Route::get('/pages/contact/{id}', [PagesController::class, 'contact']);
 Route::post('/pages/contact/', 'App\Http\Controllers\PagesController@telegram')->name('telegram');
+Route::get('/maintenance', 'App\Http\Controllers\PagesController@maintenance')->name('maintenance');
+
 
 // project
 Route::get('/project', [ProjectController::class, 'index']);
