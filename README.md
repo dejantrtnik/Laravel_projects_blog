@@ -5,7 +5,7 @@ Laravel project - learning
 - blog
 - comment to post
 - add ip collect to db
-- 
+-
 
 TO DO:
 - post like
@@ -37,6 +37,7 @@ picture ...
 
 Admin dashboard
 ![admin_dashboard_4](https://user-images.githubusercontent.com/46469418/114918740-ba36d180-9e27-11eb-836b-4cbbd250220e.png)
+ip block is protected over .htaccess 😉
 
 
 Admin dashboard: edit, roles, delete, etc\
