@@ -36,7 +36,8 @@ picture ...
 
 
 Admin dashboard
-![admin_dashboard_3](https://user-images.githubusercontent.com/46469418/114667288-94aea880-9cff-11eb-93b7-fc8c778d1c6e.png)
+![admin_dashboard_4](https://user-images.githubusercontent.com/46469418/114918740-ba36d180-9e27-11eb-836b-4cbbd250220e.png)
+
 
 Admin dashboard: edit, roles, delete, etc\
  picture ...
