@@ -278,7 +278,7 @@ class PostsController extends Controller
 
     $post = Post::find($id);
     $comment = Comments::find($id);
-
+    //dd($comment);
     // check for correct user
 
     if(auth()->user()->id !== $post->id && auth()->user()->role !== 'admin'){
@@ -296,8 +296,10 @@ class PostsController extends Controller
       Storage::delete('public/cover_images/'.$post->cover_image);
     }
 
-    $comment->delete();
     $post->delete();
+    if ($comment != null) {
+      $comment->delete();
+    }
     if (auth()->user()->role == 'admin') {
       return redirect('/admin/posts')->with('success', 'Post deleted');
     }else {

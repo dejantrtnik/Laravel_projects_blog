@@ -77,7 +77,7 @@ class IpController extends Controller
         Storage::disk('public_custom')->append('.htaccess', 'Deny from '.$value->ip);
       }
 
-      return redirect('/admin')->with('success', 'Ip deleted');
+      return redirect('/admin')->with('success', 'Ip deleted - '.$ip);
     }else {
       return redirect('/admin')->with('error', 'Ip NOT deleted');
     }
@@ -87,7 +87,7 @@ class IpController extends Controller
   {
     if ( auth()->user()->role == 'admin'){
       $white_list = DB::delete(" DELETE FROM white_list WHERE ip = '$ip' ");
-      return redirect('/admin')->with('success', 'Ip deleted');
+      return redirect('/admin')->with('success', 'Ip deleted - '. $ip);
 
     }
   }

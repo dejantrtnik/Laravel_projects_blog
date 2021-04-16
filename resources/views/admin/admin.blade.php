@@ -53,6 +53,12 @@ card{
   <div class="col-sm-6">
     <h1>Admin dashboard</h1>
     <small style="color: red;">{{ request()->server('REMOTE_ADDR') }}</small>
+    @php
+//ini_set('memory_limit', '1024M');
+
+    //print_r(Auth::guard());
+
+    @endphp
   </div>
   <div class="col-sm-6">
 
@@ -93,7 +99,7 @@ card{
     <div class="col-sm-3">
       <div class="row">
         <div class="col-sm-12" style="overflow: scroll; width: 100px; height: 200px;">
-          White list ip:
+          <h5>White list ip:</h5>
           @foreach ($white_list as $key => $list)
             <li>
               {{ $list->ip }}
@@ -107,9 +113,10 @@ card{
       </div>
       <div class="row">
         <div class="col-sm-12">
+          <hr>
           <form class="" action="{{ route('white_list') }}" method="post">
             @csrf
-            <input type="text" name="white_list_ip" placeholder="add ip ..." value="">
+            <input type="text" name="white_list_ip" placeholder="add ip to white list..." value="">
           </form>
         </div>
       </div>
@@ -117,7 +124,7 @@ card{
     <div class="col-sm-3">
       <div class="row">
         <div class="col-sm-12" style="overflow: scroll; width: 100px; height: 200px;">
-          Black list ip:
+          <h5>Black list ip:</h5>
           @foreach ($black_list as $key => $list)
             <li>
               {{ $list->ip }}
@@ -125,13 +132,13 @@ card{
                 onclick="return confirm('Are you sure you want to delete this post? \n{{ $list->ip }}');">
                 <i class="fas fa-trash"></i>
               </a>
-
             </li>
           @endforeach
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
+          <hr>
           <form class="" action="{{ route('black_list') }}" method="post">
             @csrf
             <input type="text" name="black_list_ip" placeholder="add ip to black list" value="">

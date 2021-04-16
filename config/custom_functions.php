@@ -48,13 +48,13 @@ function ip_block(){
 //ip_block();
 
 function ip_collect(){
-  //$ip = request()->server('REMOTE_ADDR');
+  $ip = request()->server('REMOTE_ADDR');
   $request_url = request()->server('REQUEST_URI');
   //$ip = '79.106.34.2';
   //$ip = '66.249.64.227';
   //$ip = '193.77.83.59';
   //$ip = '51.38.33.36';
-  $ip = '192.168.0.100';
+  //$ip = '192.168.0.100';
 
   $ipInfo = new WhiteList;
   $ipInfo = new ipInfos;

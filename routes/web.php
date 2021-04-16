@@ -28,7 +28,17 @@ use App\Http\Controllers\CommentsController;
 |
 */
 
-//Route::get('/admin/chartjs', 'App\Http\Controllers\AdminController@index')->name('graf');
+Route::get('admin/logged_in_devices', 'App\Http\Controllers\LoggedInDeviceManager@index')
+		->name('logged_in_devices.list')
+		->middleware('auth');
+
+Route::get('/logout/all', 'App\Http\Controllers\LoggedInDeviceManager@logoutAllDevices')
+		->name('logged_in_devices.logoutAll')
+		->middleware('auth');
+
+Route::get('/logout/{device_id}', 'App\Http\Controllers\LoggedInDeviceManager@logoutDevice')
+		->name('logged_in_devices.logoutSpecific')
+		->middleware('auth');
 
 // session
 Route::get('session/get','App\Http\Controllers\SessionController@accessSessionData');
@@ -58,7 +68,9 @@ Route::post('/admin/', 'App\Http\Controllers\CommentsController@store')->name('c
 Route::get('/admin/comments', 'App\Http\Controllers\CommentsController@index')->name('admin.comments');
 Route::post('/posts/{id}', 'App\Http\Controllers\CommentsController@store')->name('posts.show');
 
-Route::get('/admin/{id}/destroy', 'App\Http\Controllers\CommentsController@destroy')->name('comment.delete');
+Route::get('/admin/{id}/comments', 'App\Http\Controllers\CommentsController@destroy')->name('comment.delete');
+
+//Route::get('/admin/{id}/destroy', 'App\Http\Controllers\CommentsController@destroy')->name('comment.delete');
 
 // search
 Route::get('users/search/', 'App\Http\Controllers\UserController@search')->name('search_user');

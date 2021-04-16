@@ -35,7 +35,7 @@ class LoginController extends Controller
     protected function redirectTo()
     {
       $user = new userLogin;
-      $user->user_id = auth()->user()->id;
+      $user->user_id = auth()->user()->id;+
       $user->save();
 
         if (auth()->user()->role == 'admin') {

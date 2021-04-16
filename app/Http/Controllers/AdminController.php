@@ -126,7 +126,7 @@ class AdminController extends Controller
       return redirect('/dashboard')->with('error', 'Unauthorized page');
     }
 
-    //dd($data);
+    //dd(Auth::check());
     public function edit_role(request $role)
     {
       $user = User::find($role['id']);

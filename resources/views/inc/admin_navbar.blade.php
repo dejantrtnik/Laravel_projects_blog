@@ -54,11 +54,19 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#"> </a>
+        <a class="nav-link" href="#"><i class="fa fa-comment"></i></a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fa fa-comment"></i></a>
+        @php
+          // temporary solution 
+          $session_count = \DB::select("SELECT * FROM sessions WHERE user_id IS NOT NULL");
+        @endphp
+        @if (count($session_count) > 1)
+          <a class="nav-link" href="/admin/logged_in_devices">Logged in users ( <strong style="color: yellow;">{{ count($session_count) - 1 }}</strong> )</a>
+          @else
+            <a class="nav-link" href="/admin/logged_in_devices">Logged in users</a>
+        @endif
       </li>
     </ul>
 
@@ -79,56 +87,56 @@
     <ul class="navbar-nav ml-auto">
       <!-- Authentication Links -->
       @guest
-          @if (Route::has('login'))
-              <li class="nav-item">
-                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-              </li>
-          @endif
+        @if (Route::has('login'))
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+          </li>
+        @endif
 
-          @if (Route::has('register'))
-              <li class="nav-item">
-                  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-              </li>
-          @endif
+        @if (Route::has('register'))
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+          </li>
+        @endif
       @else
 
-          <li class="nav-item dropdown">
-              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                  {{ Auth::user()->name }}
-              </a>
+        <li class="nav-item dropdown">
+          <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+            {{ Auth::user()->name }}
+          </a>
 
 
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                @if (auth()->user()->role == 'admin')
-                  <a class="dropdown-item" href="/admin">Admin dashboard</a>
-                @else
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            @if (auth()->user()->role == 'admin')
+              <a class="dropdown-item" href="/admin">Admin dashboard</a>
+            @else
 
-                @endif
+            @endif
 
-                  <a class="dropdown-item" href="/dashboard">Dashboard</a>
-                  <a class="dropdown-item" href="/posts/create">Create post</a>
+            <a class="dropdown-item" href="/dashboard">Dashboard</a>
+            <a class="dropdown-item" href="/posts/create">Create post</a>
 
-                  <a class="dropdown-item" href="/user/{{ auth()->user()->id }}">User settings</a>
-                  <a class="dropdown-item" href="{{ route('logout') }}"
-                      onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                      {{ __('Logout') }}
-                  </a>
-                  @if (auth()->user()->role == 'admin')
-                    <a class="dropdown-item" href="/admin/info_server">Info server</a>
-                  @endif
+            <a class="dropdown-item" href="/user/{{ auth()->user()->id }}">User settings</a>
+            <a class="dropdown-item" href="{{ route('logout') }}"
+            onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+            {{ __('Logout') }}
+          </a>
+          @if (auth()->user()->role == 'admin')
+            <a class="dropdown-item" href="/admin/info_server">Info server</a>
+          @endif
 
 
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                      @csrf
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
 
-                  </form>
+          </form>
 
-              </div>
-          </li>
-      @endguest
+        </div>
+      </li>
+    @endguest
   </ul>
-  </div>
+</div>
 </nav>
 
 <script>
