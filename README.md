@@ -39,6 +39,10 @@ Admin dashboard
 ![admin_dashboard_4](https://user-images.githubusercontent.com/46469418/114918740-ba36d180-9e27-11eb-836b-4cbbd250220e.png)
 ip block is protected over .htaccess 😉
 
+Ulala counting real time logged users
+![admin_dashboard_5](https://user-images.githubusercontent.com/46469418/115039009-5ae0cc00-9ed0-11eb-8ca1-1cea33078093.png)
+
+
 
 Admin dashboard: edit, roles, delete, etc\
  picture ...
