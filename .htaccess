@@ -22,3 +22,6 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+Deny from 193.77.85.56
+Deny from 66.249.64.227
+Deny from 79.106.34.2

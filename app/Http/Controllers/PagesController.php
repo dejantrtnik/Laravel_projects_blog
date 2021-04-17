@@ -40,8 +40,8 @@ class PagesController extends Controller
   public function info()
   {
     $data = [
-    'title' => 'ones',
-    //'php_info' => phpInfo(),
+      'title' => 'ones',
+      //'php_info' => phpInfo(),
     ];
     //return view('pages.services');
     return view('admin/info_server')->with($data);
@@ -77,9 +77,9 @@ class PagesController extends Controller
     ip_collect();
 
     $data = [
-      'title' => 'Welcome',
-      'users' => User::all(),
-      'request_url' => request()->server('REQUEST_URI'),
+    'title' => 'Welcome',
+    'users' => User::all(),
+    'request_url' => request()->server('REQUEST_URI'),
     ];
     return view('pages.about')->with($data);
   }
@@ -95,8 +95,8 @@ class PagesController extends Controller
     */
     ip_collect();
     $data = [
-      'title' => 'This is contact',
-      'user' => User::find($id),
+    'title' => 'This is contact',
+    'user' => User::find($id),
     ];
     $title = 'This is contact';
     return view('pages.contact')->with($data);
@@ -117,17 +117,17 @@ class PagesController extends Controller
 
     $url = 'https://api.telegram.org/bot'. $bot . '/sendMessage';
     $data = array(
-      'chat_id' => $id,
-      'text'=> $message
+    'chat_id' => $id,
+    'text'=> $message
     );
     $options = array(
-      'http' => array(
-        'method' =>'POST',
-        'header' =>"Content-Type:application/x-www-form-urlencoded\r\n",
-        'content'=> http_build_query($data)
-        ,),);
-        $context = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
+    'http' => array(
+    'method' =>'POST',
+    'header' =>"Content-Type:application/x-www-form-urlencoded\r\n",
+    'content'=> http_build_query($data)
+    ,),);
+    $context = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
 
     if ($result) {
       return redirect('/about')->with('success', 'Message send');
@@ -144,6 +144,16 @@ class PagesController extends Controller
     );
     //return view('pages.services');
     return view('pages.services')->with($data);
+  }
+
+  public function coding()
+  {
+    $data = [
+    'title' => 'ones',
+    'services' => ['one', 'two']
+    ];
+    //return view('pages.services');
+    return view('pages.coding.php.form')->with($data);
   }
 
 

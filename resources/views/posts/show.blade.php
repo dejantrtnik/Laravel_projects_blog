@@ -13,6 +13,7 @@ foreach ($comments as $key => $comment) {
   }
 }
 @endphp
+
 @section('body')
   <div class="container">
     <hr>

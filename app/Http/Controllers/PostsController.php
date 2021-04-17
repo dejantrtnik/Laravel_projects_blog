@@ -11,52 +11,15 @@ use DB;
 
 class PostsController extends Controller
 {
-  // samples
-  /**
-  * Create a new controller instance.
-  *
-  * @return void
-  */
-  public function __construct()
+  function __construct()
   {
 
     $this->middleware('auth', ['except' => ['index', ]]);
     //$this->middleware('auth', ['except' => ['index', 'show']]);
   }
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
+
   public function index()
   {
-
-    //$posts = Post::all();
-    /**
-    * orderBy
-    */
-    //$posts = Post::orderBy('title', 'desc')->get();
-
-    /**
-    * limit
-    */
-    //$posts = Post::orderBy('title', 'desc')->take(2)->get();
-
-    /**
-    * where
-    */
-    //return Post::where('title', 'Post two')->get();
-
-    /**
-    * pagination
-    */
-    //$posts = Post::orderBy('id', 'desc')->paginate(5);
-
-    /**
-    * use DB;
-    */
-    //$posts = DB::select('SELECT * FROM posts');
-    //return view('posts.index');
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +58,7 @@ class PostsController extends Controller
   public function create()
   {
     $data = [
-      'msg_warning' => 'Please contact the admin',
+    'msg_warning' => 'Please contact the admin',
     ];
     return view('posts.create')->with($data);
   }
@@ -168,8 +131,16 @@ class PostsController extends Controller
     'users' => User::all(),
     'comments' => Comments::All(),
     ];
+
+    foreach ($data as $key => $value) {
+      if ($value == null) {
+        return redirect('/posts');
+      }
+      //dd($value);
+    }
     return view('posts.show')->with($data);
   }
+
 
   public function showAll($user_id)
   {
@@ -275,20 +246,17 @@ class PostsController extends Controller
   */
   public function destroy($id)
   {
-
     $post = Post::find($id);
-    $comment = Comments::find($id);
-    //dd($comment);
-    // check for correct user
 
+    // comments below post deletes "ralation" CASCADE in db
+
+    // check for correct user
     if(auth()->user()->id !== $post->id && auth()->user()->role !== 'admin'){
-      //dd();
       if (auth()->user()->id == $post->user_id) {
         $post->delete();
         return redirect('/posts')->with('success', 'Post deleted');
       }
       return redirect('/posts')->with('error', 'Unauthorized page');
-
     }
 
     if ( $post->cover_image != 'noimage.jpg' ) {
@@ -296,10 +264,10 @@ class PostsController extends Controller
       Storage::delete('public/cover_images/'.$post->cover_image);
     }
 
+    //dd($id);
     $post->delete();
-    if ($comment != null) {
-      $comment->delete();
-    }
+
+
     if (auth()->user()->role == 'admin') {
       return redirect('/admin/posts')->with('success', 'Post deleted');
     }else {

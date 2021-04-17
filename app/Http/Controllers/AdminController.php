@@ -150,7 +150,7 @@ class AdminController extends Controller
       $white_list = new WhiteList();
       $white_list->ip = $list['white_list_ip'];
       $white_list->save();
-      return redirect('/admin')->with('success', 'Ip added - '. $list['white_list_ip'] );
+      return redirect(url()->previous())->with('success', 'Ip added - '. $list['white_list_ip'] );
     }
 
     public function black_list(request $list)
@@ -199,7 +199,7 @@ class AdminController extends Controller
       foreach ($blackListQuery as $key => $value) {
         Storage::disk('public_custom')->append('.htaccess', 'Deny from '.$value->ip);
       }
-      return redirect('/admin')->with('success', 'Ip added - '. $list['black_list_ip'] );
+      return redirect(url()->previous())->with('success', 'Ip added - '. $list['black_list_ip'] );
     }
 
 

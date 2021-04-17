@@ -96,7 +96,6 @@ Route::get('/user/{id}/destroy', 'App\Http\Controllers\UserController@destroy')-
 
 // posts
 Route::get('/posts', [PostsController::class, 'index']);
-//Route::get('/posts/{id}', [PostsController::class, 'show']);
 Route::get('/posts/showAll/{id}', 'App\Http\Controllers\PostsController@showAll')->name('showAll');
 Route::get('/posts/{id}/destroy', 'App\Http\Controllers\PostsController@destroy')->name('posts.delete');
 
@@ -105,7 +104,7 @@ Route::get('/', [PagesController::class, 'index']);
 Route::get('/about', [PagesController::class, 'about']);
 Route::get('/pages/contact/{id}', [PagesController::class, 'contact']);
 Route::post('/pages/contact/', 'App\Http\Controllers\PagesController@telegram')->name('telegram');
-Route::get('/maintenance', 'App\Http\Controllers\PagesController@maintenance')->name('maintenance');
+Route::get('/pages/coding/php/', 'App\Http\Controllers\PagesController@coding')->name('form');
 
 
 // project

@@ -6,9 +6,7 @@
         <div class="card">
           <div class="card-header d-flex justify-content-between">
             Currently Logged In users: {{ count($devices)  }}
-            <!--
-            <a href="{{ count($devices) > 1 ? '/logout/all' : '#' }}" class="btn btn-danger {{ count($devices) == 1 ? 'disabled' : '' }}">Remove All Devices</a>
-          -->
+            <a href="{{ count($devices) > 1 ? '/logout/all' : '#' }}" class="btn btn-danger {{ count($devices) == 1 ? 'disabled' : '' }}">Remove all inactive</a>
           </div>
           <table class="table  table-hover">
             <thead class="thead-dark">
@@ -23,25 +21,25 @@
             </thead>
             <tbody>
               @foreach ($devices as $device)
-              <tr>
-                @foreach ($users as $key => $user)
-                  @if ($user->id == $device->user_id)
-                    <td>{{ $user->name }}</td>
+                <tr>
+                  @foreach ($users as $key => $user)
+                    @if ($user->id == $device->user_id)
+                      <td>{{ $user->name }}</td>
+                    @endif
+                  @endforeach
+                  @if ($device->user_id == null)
+                    <td style="color: red;">{{ 'inactive' }}</td>
                   @endif
-                @endforeach
-                @if ($device->user_id == null)
-                  <td style="color: red;">{{ 'inactive' }}</td>
-                @endif
-                <td>{{ $device->id }}</td>
-                <td>{{ $device->user_agent }}</td>
-                <td>{{ $device->ip_address }}</td>
-                <td>{{ Carbon\Carbon::parse($device->last_activity)->diffForHumans() }}</td>
-                @if ($current_session_id == $device->id)
-                <td><span>Admin user</span></td>
-                @else
-                <td><a href="/logout/{{$device->id}}" class="btn btn-danger">Remove</a></td>
-                @endif
-              </tr>
+                  <td>{{ $device->id }}</td>
+                  <td>{{ $device->user_agent }}</td>
+                  <td>{{ $device->ip_address }}</td>
+                  <td>{{ Carbon\Carbon::parse($device->last_activity)->diffForHumans() }}</td>
+                  @if ($current_session_id == $device->id)
+                    <td><span>Admin user</span></td>
+                  @else
+                    <td><a href="/logout/{{$device->id}}" class="btn btn-danger">Remove</a></td>
+                  @endif
+                </tr>
               @endforeach
             </tbody>
           </table>

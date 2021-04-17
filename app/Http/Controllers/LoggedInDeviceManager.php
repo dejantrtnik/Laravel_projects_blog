@@ -7,11 +7,6 @@ use DB;
 
 class LoggedInDeviceManager extends Controller
 {
-  /**
-  * Display a listing of the currently logged in devices.
-  *
-  * @return \Illuminate\Http\Response
-  */
   public function index()
   {
 
@@ -27,12 +22,6 @@ class LoggedInDeviceManager extends Controller
     return view('admin.list')->with($data)->with('current_session_id', \Session::getId());
   }
 
-
-  /**
-  * Logout a session based on session id.
-  *
-  * @return \Illuminate\Http\Response
-  */
   public function logoutDevice(Request $request, $device_id)
   {
 
@@ -40,18 +29,15 @@ class LoggedInDeviceManager extends Controller
     return redirect('admin/logged_in_devices');
   }
 
-
-
-  /**
-  * Logouts a user from all other devices except the current one.
-  *
-  * @return \Illuminate\Http\Response
-  */
   public function logoutAllDevices(Request $request)
   {
-    \DB::table('sessions')
-    ->where('user_id', \Auth::user()->id)
-    ->where('id', '!=', \Session::getId())->delete();
+    //dd($request);
+    //\DB::table('sessions')
+    //->where('user_id', \Auth::user()->id)
+    //->where('id', '!=', \Session::getId())->delete();
+
+
+    $session_count = \DB::select("DELETE FROM sessions WHERE user_id IS NULL");
 
     return redirect('admin/logged_in_devices');
   }
