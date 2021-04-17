@@ -42,6 +42,8 @@ ip block is protected over .htaccess 😉
 Ulala counting real time logged users
 ![admin_dashboard_5](https://user-images.githubusercontent.com/46469418/115039009-5ae0cc00-9ed0-11eb-8ca1-1cea33078093.png)
 
+First visit with block or allow option
+![admin_dashboard_first_visit](https://user-images.githubusercontent.com/46469418/115117947-47516600-9fa1-11eb-8a8f-1467a0b14c4a.png)
 
 
 Admin dashboard: edit, roles, delete, etc\
