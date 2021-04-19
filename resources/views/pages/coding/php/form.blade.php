@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('body')
-  <h1>FORM</h1>
+  <h1>FORM - in progress</h1>
 
 @php
 //echo '<br>';

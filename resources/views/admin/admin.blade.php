@@ -52,17 +52,9 @@ card{
 <div class="row">
   <div class="col-sm-6">
     <h1>Admin dashboard</h1>
-    <small style="color: red;">{{ request()->server('REMOTE_ADDR') }}</small>
-    @php
-//ini_set('memory_limit', '1024M');
-
-    //print_r(Auth::guard());
-
-    @endphp
+    Current ip address: <small style="color: red;">{{ request()->server('REMOTE_ADDR') }}</small>
   </div>
   <div class="col-sm-6">
-
-
 
     <h1></h1>
   </div>
@@ -273,12 +265,12 @@ card{
         </div>
         <div class="card-footer bg-transparent border-primary"></div>
       </div>
-
     </div>
+
   </div>
   <script type="text/javascript">
-    function handleSelect(elm)
-    {
+    // function for selecting country on dropdown
+    function handleSelect(elm){
       window.location = elm.value;
     }
   </script>
@@ -286,7 +278,7 @@ card{
 <hr>
 <h3>Registered users per month</h3>
 @php
-  print_r($users_per_month);
+  //print_r($users_per_month);
 @endphp
 <hr>
 

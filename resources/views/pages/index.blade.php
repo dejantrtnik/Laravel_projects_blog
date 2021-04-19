@@ -115,56 +115,56 @@ ini_set('memory_limit', '25M');
       </div>
       <hr>
 
-<!--
+      <!--
       <hr>
       <div class="card">
-        <div class="card-header">
-          <h3>Computers</h3>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Hardwear</h5>
-          <p class="card-text">Links</p>
-          <ul>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-          </ul>
-          <a href="#" class="btn btn-primary">Read more</a>
-        </div>
-      </div>
-      <hr>
-      <div class="card">
-        <div class="card-header">
-          <h3>Software</h3>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Software</h5>
-          <p class="card-text">Links</p>
-          <ul>
-            <li><a href="#">Windows</a></li>
-            <li><a href="#">Linux</a></li>
-          </ul>
-          <a href="#" class="btn btn-primary">Read more</a>
-        </div>
-      </div>
-      <hr>
-      <div class="card">
-        <div class="card-header">
-          <h3>Coding</h3>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Computer Lenguage</h5>
-          <p class="card-text">Links</p>
-          <ul>
-            <li><a href="#">PHP</a></li>
-            <li><a href="#">Python</a></li>
-          </ul>
-          <a href="#" class="btn btn-primary">Read more</a>
-        </div>
-      </div>
+      <div class="card-header">
+      <h3>Computers</h3>
+    </div>
+    <div class="card-body">
+    <h5 class="card-title">Hardwear</h5>
+    <p class="card-text">Links</p>
+    <ul>
+    <li><a href="#">Link</a></li>
+    <li><a href="#">Link</a></li>
+  </ul>
+  <a href="#" class="btn btn-primary">Read more</a>
+</div>
+</div>
+<hr>
+<div class="card">
+  <div class="card-header">
+    <h3>Software</h3>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Software</h5>
+    <p class="card-text">Links</p>
+    <ul>
+      <li><a href="#">Windows</a></li>
+      <li><a href="#">Linux</a></li>
+    </ul>
+    <a href="#" class="btn btn-primary">Read more</a>
+  </div>
+</div>
+<hr>
+<div class="card">
+  <div class="card-header">
+    <h3>Coding</h3>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Computer Lenguage</h5>
+    <p class="card-text">Links</p>
+    <ul>
+      <li><a href="#">PHP</a></li>
+      <li><a href="#">Python</a></li>
+    </ul>
+    <a href="#" class="btn btn-primary">Read more</a>
+  </div>
+</div>
 -->
 
-    </div>
+</div>
 
 
-    <hr><br>
-  @endsection
+<br>
+@endsection

@@ -1,3 +1,12 @@
+<script>
+  document.onkeydown = function(e) {
+    if (e.ctrlKey && e.keyCode === 85) {
+      alert('Oh come on, you can do it yourself');
+      return false;
+    }
+  };
+</script>
+<body oncontextmenu="return false;"></body>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -21,6 +30,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="{{ asset('resources/css/app.css') }}">
   <title>{{ config('app.name', 'Laravel') }}</title>
+
   <style type="text/css">
 
   .footer {

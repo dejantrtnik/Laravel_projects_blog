@@ -46,7 +46,7 @@
   <div class="row">
     <div class=" left-column col-lg-10 offset-lg-1 p-1">
       <div class="card">
-        <h3 style="color: blue;" class="card-header">{{ $project->title }}</h3>
+        <h3 style="color: blue;" class="card-header"><a href="/project/{{ $project->id }}">{{ $project->title }}</a></h3>
         <div class="card-body">
           <h5 class="card-title">{{ $project->topic }}</h5>
 

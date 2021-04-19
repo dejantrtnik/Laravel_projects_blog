@@ -1,10 +1,16 @@
 @extends('layouts.app')
-
+@php
+  $date = date("d.m.Y", strtotime($projects->created_at));
+@endphp
 @section('body')
-  <h3>SHOW detail project</h3>
+  <a class="btn btn-secondary" href="{{ URL::previous() }}">Back</a>
+  <hr>
+  <h3>{{ $projects->title }}</h3>
 
-  {{ $projects->title }} <br>
-  {{ $projects->topic }} <br>
+
+  <hr>
   {!! $projects->body !!}
-  <hr><br>
+  <hr>
+  Created by <strong>( ?? )</strong>  ( {{ $date }} )
+  <br><br>
 @endsection
