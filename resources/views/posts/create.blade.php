@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('body')
   @if (auth()->user()->role == 'admin' || auth()->user()->role == 'member')
     <h3>Create</h3>

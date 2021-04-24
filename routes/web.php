@@ -16,6 +16,8 @@ use App\Http\Controllers\IpController;
 use App\Http\Controllers\ChartJsController;
 use App\Http\Controllers\CommentsController;
 
+use App\Http\Controllers\backupController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +64,10 @@ Route::get('/admin/chartjs_country/{ipStrlen}', [ChartJsController::class, 'show
 //Route::get('/admin/info_server', [PagesController::class, 'info'])->name('info_server')
 Route::get('/admin/info_server', 'App\Http\Controllers\PagesController@info')->name('info_server');
 
+//BACKUP
+Route::get('/admin/backup', 'App\Http\Controllers\backupController@index')->name('index');
+Route::get('/admin/backup/{var}', 'App\Http\Controllers\backupController@store')->name('backup_store');
+
 
 // comments
 Route::post('/admin/', 'App\Http\Controllers\CommentsController@store')->name('comment.store');
@@ -75,10 +81,14 @@ Route::get('/admin/{id}/comments', 'App\Http\Controllers\CommentsController@dest
 // search
 Route::get('users/search/', 'App\Http\Controllers\UserController@search')->name('search_user');
 Route::get('posts/search/', 'App\Http\Controllers\PostsController@search')->name('search_post');
+Route::get('admin/ip/search', 'App\Http\Controllers\IpController@search')->name('search_ip');
+
 
 // admin / ip
 Route::get('/admin/ip/', [IpController::class, 'index']);
-Route::get('/admin/ip/{ipStrlen}', [IpController::class, 'show']);
+Route::get('/admin/ip/{table}', [IpController::class, 'show']);
+Route::get('/admin/ip/country/{table}', [IpController::class, 'showCountry']);
+
 
 Route::get('/admin/{id}/destroy', 'App\Http\Controllers\IpController@destroy')->name('ip.delete');
 Route::get('/admin/{id}/destroy_white_list', 'App\Http\Controllers\IpController@destroy_white_list')->name('ip_white.delete');
@@ -89,7 +99,6 @@ Route::get('/user', [UserController::class, 'index']);
 Route::resource('/user', 'App\Http\Controllers\UserController');
 
 Route::get('/user/create', 'App\Http\Controllers\UserController@create')->name('user.create');
-//Route::get('/user/create', 'App\Http\Controllers\UserController@store')->name('user.store');
 
 Route::post('/user/{id}/edit', 'App\Http\Controllers\UserController@update')->name('user.update');
 Route::get('/user/{id}/destroy', 'App\Http\Controllers\UserController@destroy')->name('user.delete');
@@ -104,7 +113,8 @@ Route::get('/', [PagesController::class, 'index']);
 Route::get('/about', [PagesController::class, 'about']);
 Route::get('/pages/contact/{id}', [PagesController::class, 'contact']);
 Route::post('/pages/contact/', 'App\Http\Controllers\PagesController@telegram')->name('telegram');
-Route::get('/pages/coding/php/', 'App\Http\Controllers\PagesController@coding')->name('form');
+Route::get('/pages/coding/{id}', 'App\Http\Controllers\PagesController@coding')->name('form');
+//Route::get('/pages/coding/php/', 'App\Http\Controllers\PagesController@coding')->name('form');
 
 
 // project

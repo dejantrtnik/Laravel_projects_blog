@@ -13,6 +13,9 @@ class CommentsController extends Controller
 
     public function index()
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       $data = [
       'comments' => Comments::orderBy('id', 'desc')->paginate(5),
       'comment_count' => Comments::all(),

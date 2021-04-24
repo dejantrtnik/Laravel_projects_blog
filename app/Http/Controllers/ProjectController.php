@@ -108,6 +108,9 @@ class ProjectController extends Controller
   */
   public function show()
   {
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/project');
+    }
     $data = [
     'title' => 'Projects',
     'projects' => projects::orderBy('id', 'desc')->get(),
@@ -118,6 +121,7 @@ class ProjectController extends Controller
 
   public function show_detail($id)
   {
+
     $data = [
     'title' => 'Projects',
     'projects' => 'Some projects',

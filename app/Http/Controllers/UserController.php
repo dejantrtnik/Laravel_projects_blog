@@ -31,6 +31,9 @@ class UserController extends Controller
   public function create(Request $request)
   {
     //dd($request);
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/dashboard');
+    }
 
     return view('user.create');
   }
@@ -164,7 +167,8 @@ class UserController extends Controller
     }
   }
 
-  public function search(Request $request){
+  public function search(Request $request)
+  {
     /*
     |--------------------------------------------------------------------------
     | ip_collect()
@@ -173,7 +177,6 @@ class UserController extends Controller
     | collecting ip numbers in db
     */
     ip_collect();
-
     // Get the search value from the request
     $search = $request->input('search');
 

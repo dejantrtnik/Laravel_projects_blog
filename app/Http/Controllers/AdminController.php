@@ -23,6 +23,9 @@ class AdminController extends Controller
   public function index()
   {
     //dd(base_path());
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/');
+    }
 
     function userMonthCountJson(){
       $dates = array(
@@ -90,7 +93,7 @@ class AdminController extends Controller
         'users_count' => User::all(),
         'posts_count' => Post::all(),
         'ip_count' => visits::all(),
-        'ip_unigue_count' => ipInfos::all(),
+        'ip_unigue_count' => group_country(),
         'comments' => Comments::All(),
         'countries' => group_country(),
         'users_per_month' => userMonthCountJson(),
@@ -123,7 +126,7 @@ class AdminController extends Controller
 
         return view('admin.admin')->with($data);
       }
-      return redirect('/dashboard')->with('error', 'Unauthorized page');
+
     }
 
     //dd(Auth::check());
@@ -207,6 +210,9 @@ class AdminController extends Controller
 
     public function users()
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       if (auth()->user()->role == 'admin') {
         $data = [
         'users' => User::orderBy('id', 'asc')->paginate(5),
@@ -224,6 +230,9 @@ class AdminController extends Controller
 
     public function posts()
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       if (auth()->user()->role == 'admin') {
         $data = [
         'posts' => Post::orderBy('id', 'desc')->paginate(5),
@@ -233,7 +242,6 @@ class AdminController extends Controller
 
         return view('admin.posts')->with($data);
       }
-      return redirect('/dashboard')->with('error', 'Unauthorized page');
     }
 
     public function create()
@@ -243,6 +251,9 @@ class AdminController extends Controller
 
     public function show($user_id)
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       if (auth()->user()->role == 'admin') {
         $data = [
         'posts' => Post::where('user_id', $user_id)->get(),
@@ -250,21 +261,13 @@ class AdminController extends Controller
         //dd($data);
         return view('admin.show')->with($data);
       }
-      return redirect('/dashboard')->with('error', 'Unauthorized page');
     }
-
-    public function info_server()
-    {
-      $data = [
-      'title' => 'info_server',
-      ];
-      //dd($data);
-      return redirect('admin/info_server')->with($data);
-    }
-
 
     public function graf()
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       if (auth()->user()->role == 'admin') {
         $data = [
         'posts' => Post::all(),

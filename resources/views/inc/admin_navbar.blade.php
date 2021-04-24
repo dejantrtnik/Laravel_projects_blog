@@ -50,16 +50,13 @@
         <a class="nav-link" href="#"> </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
-      </li>
-
-      <li class="nav-item">
         <a class="nav-link" href="#"><i class="fa fa-comment"></i></a>
       </li>
 
       <li class="nav-item">
+        {{ session('count_logged_users') }}
         @php
-          // temporary solution 
+          // temporary solution
           $session_count = \DB::select("SELECT * FROM sessions WHERE user_id IS NOT NULL");
         @endphp
         @if (count($session_count) > 1)
@@ -108,6 +105,7 @@
 
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             @if (auth()->user()->role == 'admin')
+              <a class="dropdown-item" href="/"><i class="fas fa-home"></i> Home</a>
               <a class="dropdown-item" href="/admin">Admin dashboard</a>
             @else
 
@@ -124,6 +122,7 @@
           </a>
           @if (auth()->user()->role == 'admin')
             <a class="dropdown-item" href="/admin/info_server">Info server</a>
+            <a class="dropdown-item" href="/admin/backup">BACKUP</a>
           @endif
 
 

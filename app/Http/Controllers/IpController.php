@@ -16,6 +16,9 @@ class IpController extends Controller
 
   public function index()
   {
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/');
+    }
     if (auth()->user()->role == 'admin') {
       $data = [
         'ip' => ipInfos::all(),
@@ -26,23 +29,51 @@ class IpController extends Controller
     }
   }
 
-  public function show($ipStrlen)
+  public function show($table)
   {
+    //dd($table);
+
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/posts')->with('error', 'Unauthorized page');
+    }
+
     $data = [
-      'ip' => visits::where('ipStrlen', $ipStrlen)->get(),
-      'ip_country' => ipInfos::where('ipStrlen', $ipStrlen)->get(),
+      'ip' => visits::where('ipStrlen', $table)->get(),
+      'ip_country' => ipInfos::where('ipStrlen', $table)->get(),
     ];
-    //$ip = visits::where('ipStrlen', $ipStrlen)->get();
-    //$ip = DB::select("SELECT * FROM visits WHERE ipStrlen = '$ipStrlen'");
-    //Post::orderBy('id', 'desc')->paginate(5);
-    //dd($ip);
     return view('admin.ip.show')->with($data);
+
   }
+
+  public function showCountry($table)
+  {
+    //dd($table);
+
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/posts')->with('error', 'Unauthorized page');
+    }
+
+    function group_country(){
+      return DB::select("SELECT country FROM ip_infos GROUP by country");
+    }
+
+    //dd(group_country());
+    $data = [
+      'ip' => visits::where('ipStrlen', $table)->get(),
+      'ip_country' => ipInfos::where('country', $table)->get(),
+      'title' => $table,
+      //'ip_country' =>group_country(),
+    ];
+    return view('admin.ip.country.show')->with($data);
+
+  }
+
+
 
   public function destroy($ip)
   {
 
-    if ( auth()->user()->role == 'admin') {
+    if (auth()->user()->role == 'admin') {
       $black_list = DB::delete(" DELETE FROM black_list WHERE ip = '$ip' ");
 
 
@@ -90,6 +121,22 @@ class IpController extends Controller
       return redirect('/admin')->with('success', 'Ip deleted - '. $ip);
 
     }
+  }
+  public function search(Request $request)
+  {
+    //dd($request);
+
+    // Get the search value from the request
+    $search = $request->input('search');
+
+    // Search in the title and body columns from the posts table
+    $data = [
+      'query' => ipInfos::query()->where('ip', 'LIKE', "%{$search}%")->orWhere('country', 'LIKE', "%{$search}%")->get(),
+    ];
+
+    // Return the search view with the resluts compacted
+    //return view('admin.ip.search', compact('query'));
+    return view('admin.ip.search')->with($data);
   }
 
 }

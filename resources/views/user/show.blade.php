@@ -48,20 +48,15 @@
     <div class="col-md-7">
          <a class="btn btn-primary" href="{{ $user->id }}/edit">Edit</a>
 
-         @if ($user->role != 'admin')
-           <a href="#{{ $user->id }}/destroy"><button type="button" class="btn btn-danger disabled" data-bs-toggle="tooltip" data-bs-placement="top" title="temporary disabled">
-             Delete
-           </button></a>
-         @endif
     </div>
     @if ((auth()->user()->role == 'admin'))
       <hr>
       @foreach ($posts as $key => $post)
-        {{ $post }}
+        {!! $post !!}
       @endforeach
       <hr>
       @foreach ($comments as $key => $comment)
-        {{ $comment }}
+        {!! $comment !!}
       @endforeach
       @php
         //print_r($posts);

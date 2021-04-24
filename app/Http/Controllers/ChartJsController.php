@@ -14,6 +14,9 @@ class ChartJsController extends Controller
 {
     public function index()
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       //$country = 'Canada';
       //$dataVisitors = json_encode($datasetsVisitors);
       function monthCountJson(){
@@ -113,6 +116,9 @@ class ChartJsController extends Controller
     // /var/www/html/resources/views/admin/chartjs_country.blade.php
     public function show_country($country)
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       //$country = 'Canada';
       //$dataVisitors = json_encode($datasetsVisitors);
       function monthCountJson($country){
@@ -206,6 +212,7 @@ class ChartJsController extends Controller
           'dataVisitors' => json_encode($datasetsVisitors),
           'monthCountJson' => monthCountJson($country),
           'search_country' => search_country($country),
+          'ip_country' => ipInfos::where('country', $country)->get(),
           //'AllMonthCount' => AllMonthCount(),
           'months' => json_encode([
             'January',

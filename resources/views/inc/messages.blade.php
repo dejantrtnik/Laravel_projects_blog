@@ -17,3 +17,9 @@
             {{ session('error') }}
       </div>
 @endif
+
+@if (session('count_logged_users'))
+      <div class="alert alert-danger">
+            {{ session('count_logged_users') }}
+      </div>
+@endif

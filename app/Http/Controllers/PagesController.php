@@ -39,6 +39,10 @@ class PagesController extends Controller
 
   public function info()
   {
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/');
+    }
+    
     $data = [
       'title' => 'ones',
       //'php_info' => phpInfo(),
@@ -146,14 +150,15 @@ class PagesController extends Controller
     return view('pages.services')->with($data);
   }
 
-  public function coding()
+  public function coding($id)
   {
     $data = [
-    'title' => 'ones',
+    'title' => $id,
+    'maintenance' => 'in progress',
     'services' => ['one', 'two']
     ];
     //return view('pages.services');
-    return view('pages.coding.php.form')->with($data);
+    return view('pages.coding.form')->with($data);
   }
 
 

@@ -292,7 +292,7 @@ card{
     data: {
       labels: <?= $months ?>,
       datasets: [{
-        label: 'users date register',
+        label: 'users count register',
         data: <?= $users_per_month ?>,
         backgroundColor: [
         'rgba(255, 99, 132, 0.2)',

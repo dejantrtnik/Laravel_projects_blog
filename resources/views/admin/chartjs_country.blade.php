@@ -13,7 +13,6 @@
 
 
 
-
   <hr>
   <a class="btn btn-secondary" href="{{ URL::previous() }}">Back</a>
   <a class="btn btn-primary" href="/admin">Home admin</a>
@@ -28,8 +27,37 @@
           </div>
         </div>
       </div>
+
+      <div class="col-md-10 offset-md-2">
+        <div class="panel panel-default">
+          <div class="panel-heading">Dashboard</div>
+
+          <hr>
+          <table>
+            <thead>
+              <tr>
+                <th>ip</th>
+                <th>date visit</th>
+              </tr>
+            </thead>
+            @foreach ($ip_country as $key => $value)
+              @php
+                $created_at = date("H:i:s - d.m.Y", strtotime($value->created_at));
+              @endphp
+              <tbody>
+                <tr>
+                  <th><a href="/admin/ip/{{ $value->ipStrlen }}">{{ $value->ip }}</a></th>
+                  <th>{{ $created_at }}</th>
+                </tr>
+              </tbody>
+            @endforeach
+          </table>
+        </div>
+      </div>
+
     </div>
   </div>
+  <hr><br>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.0/Chart.min.js"></script>
 
   <script type="text/javascript">
