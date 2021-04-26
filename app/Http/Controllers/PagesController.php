@@ -42,13 +42,33 @@ class PagesController extends Controller
     if (auth()->user() == null || auth()->user()->role != 'admin') {
       return redirect('/');
     }
-    
-    $data = [
-      'title' => 'ones',
-      //'php_info' => phpInfo(),
-    ];
-    //return view('pages.services');
-    return view('admin/info_server')->with($data);
+
+    function server(){
+      $bytes_free = disk_free_space("/");
+      $bytes_total = disk_total_space("/");
+
+      $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
+      $base = 1024;
+      $class_free = min((int)log($bytes_free , $base) , count($si_prefix) - 1);
+      $class_total = min((int)log($bytes_total , $base) , count($si_prefix) - 1);
+
+      $procentage_value = round(( $bytes_free / $bytes_total ) * 100, 2);
+      //$procentage = 100 - $procentage_value;
+      //dd($procentage_value);
+
+      $data = array(
+        'disk_free' => sprintf('%1.2f' , $bytes_free / pow($base, $class_free)) . ' ' . $si_prefix[$class_free],
+        'disk_total' => sprintf('%1.2f' , $bytes_total / pow($base, $class_total)) . ' ' . $si_prefix[$class_total],
+        'disk_free_num' => sprintf('%1.2f' , $bytes_free / pow($base, $class_free)),
+        'disk_total_num' => sprintf('%1.2f' , $bytes_total / pow($base, $class_total)),
+        //'procentage' => $procentage,
+        'procentage_value' => $procentage_value,
+      );
+      return $data;
+    }
+
+    //server();
+    return view('admin/info_server')->with('server', server());
   }
 
   public function maintenance()

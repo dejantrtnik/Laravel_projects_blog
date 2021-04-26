@@ -11,6 +11,7 @@ use App\Models\ipInfos;
 use App\Models\Comments;
 use App\Models\WhiteList;
 use App\Models\BlackList;
+use App\Models\userLogin;
 use DB;
 
 class AdminController extends Controller
@@ -68,13 +69,13 @@ class AdminController extends Controller
       function countryMonthCountJson(){
         //$country = [];
         //dd($country);
-      $country = DB::select("SELECT country FROM ip_infos GROUP by country");
-      //$country = array();
+        $country = DB::select("SELECT country FROM ip_infos GROUP by country");
+        //$country = array();
 
-      //$country = DB::table('ip_infos')
-      //           ->select('country', DB::raw('count(*) as count'))
-      //           ->groupBy('country')
-      //           ->get();
+        //$country = DB::table('ip_infos')
+        //           ->select('country', DB::raw('count(*) as count'))
+        //           ->groupBy('country')
+        //           ->get();
         return json_encode($country);
       }
 
@@ -174,30 +175,30 @@ class AdminController extends Controller
 
       $blackListQuery = BlackList::all();
       $ht =
-'<IfModule mod_rewrite.c>
-    <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
-    </IfModule>
-    RewriteEngine On
-    <FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
-    </FilesMatch>
+      '<IfModule mod_rewrite.c>
+        <IfModule mod_negotiation.c>
+          Options -MultiViews -Indexes
+        </IfModule>
+        RewriteEngine On
+        <FilesMatch "^\.">
+          Order allow,deny
+          Deny from all
+        </FilesMatch>
 
-    # Handle Authorization Header
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+        # Handle Authorization Header
+        RewriteCond %{HTTP:Authorization} .
+        RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+        # Redirect Trailing Slashes If Not A Folder...
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_URI} (.+)/$
+        RewriteRule ^ %1 [L,R=301]
 
-    # Send Requests To Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
-</IfModule>';
+        # Send Requests To Front Controller...
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^ index.php [L]
+      </IfModule>';
       Storage::disk('public_custom')->put('.htaccess', $ht);
       foreach ($blackListQuery as $key => $value) {
         Storage::disk('public_custom')->append('.htaccess', 'Deny from '.$value->ip);
@@ -224,6 +225,26 @@ class AdminController extends Controller
         ];
 
         return view('admin.users')->with($data);
+      }
+      return redirect('/dashboard')->with('error', 'Unauthorized page');
+    }
+
+    public function users_req()
+    {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
+      if (auth()->user()->role == 'admin') {
+        $data = [
+        'users' => User::orderBy('id', 'asc')->paginate(5),
+        'users_admin' => DB::select("SELECT * FROM users WHERE role = 'admin'"),
+        'users_guest' => DB::select("SELECT * FROM users WHERE role = 'guest'"),
+        'users_member' => DB::select("SELECT * FROM users WHERE role = 'member'"),
+        'password_resets' => DB::select("SELECT * FROM password_resets"),
+        'comments' => Comments::All(),
+        ];
+
+        return view('admin.users_req')->with($data);
       }
       return redirect('/dashboard')->with('error', 'Unauthorized page');
     }
@@ -263,6 +284,43 @@ class AdminController extends Controller
       }
     }
 
+    public function show_login()
+    {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
+      if (auth()->user()->role == 'admin') {
+        $data = [
+        //'title' => 'user login detail time date',
+        //'user_login' => userLogin::orderBy('id', 'desc')->get(),
+        'user_login' => userLogin::groupBy('user_id')->selectRaw('count(*) as total, user_id')->get(),
+        //'user' => User::orderBy('id', 'desc')->get(),
+        ];
+        //dd($data);
+        return view('admin.users_login')->with($data);
+      }
+    }
+
+    public function show_detail_by_user($user_id)
+    {
+      //dd($user_id);
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
+
+      function query($user_id){
+        return User::where('id', $user_id)->get();
+      }
+
+      $data = [
+      'user_login' => userLogin::groupBy('user_id')->selectRaw('count(*) as total, user_id')->get(),
+      'user_details' => userLogin::orderBy('created_at', 'desc')->where('user_id', $user_id)->paginate(10),
+      'users' => query($user_id),
+      ];
+      return view('admin.users_login')->with($data);
+
+    }
+
     public function graf()
     {
       if (auth()->user() == null || auth()->user()->role != 'admin') {
@@ -273,12 +331,9 @@ class AdminController extends Controller
         'posts' => Post::all(),
         'ip_count' => visits::all(),
         ];
-        //dd($data);
         return view('admin.graf')->with($data);
       }
       return redirect('/dashboard')->with('error', 'Unauthorized page');
     }
-
-
 
   }

@@ -46,6 +46,7 @@ class User extends Authenticatable
     return $this->hasMany('App\Models\Post');
   }
 
+
   //public function sendPasswordResetNotification($token)
   //{
   //  $this->notify(new ResetPasswordNotification($token));

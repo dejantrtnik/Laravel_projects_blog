@@ -50,16 +50,19 @@ Route::get('session/remove','App\Http\Controllers\SessionController@deleteSessio
 // admin
 Route::get('/admin', 'App\Http\Controllers\AdminController@index')->name('admin');
 Route::get('/admin/users', 'App\Http\Controllers\AdminController@users')->name('users');
+Route::get('/admin/users_req', 'App\Http\Controllers\AdminController@users_req')->name('users_req');
 Route::get('/admin/posts', 'App\Http\Controllers\AdminController@posts')->name('posts');
 Route::get('/admin/show/{id}', 'App\Http\Controllers\AdminController@show')->name('show');
 Route::get('/admin/edit_role/{role}', 'App\Http\Controllers\AdminController@edit_role')->name('edit_role');
 Route::post('/admin/white_list', 'App\Http\Controllers\AdminController@white_list')->name('white_list');
 Route::post('/admin/black_list', 'App\Http\Controllers\AdminController@black_list')->name('black_list');
-
-
 Route::get('/admin/project/', 'App\Http\Controllers\ProjectController@show')->name('project');
 Route::get('/admin/chartjs', [ChartJsController::class, 'index'])->name('chartjs');
 Route::get('/admin/chartjs_country/{ipStrlen}', [ChartJsController::class, 'show_country'])->name('chartjs_country');
+
+Route::get('/admin/user_login', 'App\Http\Controllers\AdminController@show_login')->name('user_login ');
+
+Route::get('/admin/user_login/{user_id}', 'App\Http\Controllers\AdminController@show_detail_by_user')->name('user_login ');
 
 //Route::get('/admin/info_server', [PagesController::class, 'info'])->name('info_server')
 Route::get('/admin/info_server', 'App\Http\Controllers\PagesController@info')->name('info_server');
@@ -97,9 +100,7 @@ Route::get('/admin/{id}/destroy_white_list', 'App\Http\Controllers\IpController@
 // user
 Route::get('/user', [UserController::class, 'index']);
 Route::resource('/user', 'App\Http\Controllers\UserController');
-
 Route::get('/user/create', 'App\Http\Controllers\UserController@create')->name('user.create');
-
 Route::post('/user/{id}/edit', 'App\Http\Controllers\UserController@update')->name('user.update');
 Route::get('/user/{id}/destroy', 'App\Http\Controllers\UserController@destroy')->name('user.delete');
 

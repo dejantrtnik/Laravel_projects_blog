@@ -11,10 +11,6 @@ card{
   background-color: rgb(209, 191, 224);
 }
 </style>
-<?php
-//$_SESSION['admin_dashboard'] = 'Admin dashboard';
-//$_SESSION['admin_dashboard'];
-?>
 @section('body')
   @php
   if (count($users_count) > 0) {
@@ -31,7 +27,6 @@ card{
       $last_comment_date = 'no comment';
     }else {
       $last_comment_date = date("H:i:s - d.m.Y", strtotime($last_comment->created_at));
-      // code...
     }
   }else {
     $posts = 'no posts';
@@ -51,8 +46,7 @@ card{
 @endphp
 <div class="row">
   <div class="col-sm-6">
-    <h1>Admin dashboard</h1>
-    Current ip address: <small style="color: red;">{{ request()->server('REMOTE_ADDR') }}</small>
+    The current ip from which you are accessing: <small style="color: red;">{{ request()->server('REMOTE_ADDR') }}</small>
   </div>
   <div class="col-sm-6">
 
@@ -62,85 +56,7 @@ card{
 <hr>
 <div class="container">
   <!-- Statistic -->
-  <div class="row">
-    <div class="col-sm-3">
-      Admins:
-      @foreach ($users_admin as $key => $admin)
-        <li>
-          {{ $admin->name }} <br>
-        </li>
-      @endforeach
-      <hr>
-    </div>
-    <div class="col-sm-3">
-      Last registered Guest:
-      @foreach ($users_guest as $key => $guest)
-        <li>
-          {{ $guest->name }} <br>
-        </li>
-      @endforeach
-      <hr>
-      Members roles:
-      <li>
-        {{ count($users_member) }}
-      </li>
-      <hr>
-      Members registered: <br>
-      Posts published: <br>
-    </div>
-    <div class="col-sm-3">
-      <div class="row">
-        <div class="col-sm-12" style="overflow: scroll; width: 100px; height: 200px;">
-          <h5>White list ip:</h5>
-          @foreach ($white_list as $key => $list)
-            <li>
-              {{ $list->ip }}
-              <a href="{{ route('ip_white.delete', $list->ip) }}"
-                onclick="return confirm('Are you sure you want to delete this post? \n{{ $list->ip }}');">
-                <i class="fas fa-trash"></i>
-              </a>
-            </li>
-          @endforeach
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <hr>
-          <form class="" action="{{ route('white_list') }}" method="post">
-            @csrf
-            <input type="text" name="white_list_ip" placeholder="add ip to white list..." value="">
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="row">
-        <div class="col-sm-12" style="overflow: scroll; width: 100px; height: 200px;">
-          <h5>Black list ip:</h5>
-          @foreach ($black_list as $key => $list)
-            <li>
-              {{ $list->ip }}
-              <a href="{{ route('ip.delete', $list->ip) }}"
-                onclick="return confirm('Are you sure you want to delete this post? \n{{ $list->ip }}');">
-                <i class="fas fa-trash"></i>
-              </a>
-            </li>
-          @endforeach
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <hr>
-          <form class="" action="{{ route('black_list') }}" method="post">
-            @csrf
-            <input type="text" name="black_list_ip" placeholder="add ip to black list" value="">
-          </form>
-        </div>
-      </div>
-    </div>
 
-  </div>
-  <hr>
   <div class="row">
     <div class="card-deck">
 
@@ -148,20 +64,19 @@ card{
         @if (count($users_guest) > 0)
           <a href="/admin/users"><h5 class="card-header text-dark bg-warning border-warning ">Member request</h5></a>
         @else
-          <h5 class="card-header text-light bg-dark border-dark ">Member request</h5>
+          <h5 class="card-header text-light bg-info border-info ">Member request</h5>
         @endif
         <div class="card-body">
           <h3>{{ count($users_guest) }}</h3>
+          <a href="/admin/users_req">show request</a>
           <p class="card-text"><small class="text-muted"></small></p>
           Last registered guest:
-          {{ count($users_guest) }}
           @foreach ($users_guest as $key => $guest)
             <li>
               {{ $guest->name }} <br>
             </li>
           @endforeach
         </div>
-        <a href="/admin/users">show details</a>
         <div class="card-footer bg-transparent border-dark">
           <small>Last registered</small><br>
           Last registered Guest:
@@ -174,14 +89,13 @@ card{
       </div>
 
       <div class="card p-2" style="width: 20rem;">
-        <a href="/admin/users"><h5 class="card-header text-white bg-dark border-dark ">Registered</h5></a>
+        <a href="/admin/users"><h5 class="card-header text-white bg-info border-info ">Registered users</h5></a>
         <div class="card-body">
           <h3>{{ $users - 1 }}</h3>
-          <a href="/admin/users">show details</a>
-          <p class="card-text">Show all members</p>
+          <a href="/admin/users">Show all members</a>
           <p class="card-text"><small class="text-muted"></small></p>
         </div>
-        <div class="card-footer bg-transparent border-dark">
+        <div class="card-footer bg-transparent border-info">
           <small>Last registered</small><br>
           @if ($posts == 'no posts')
           @else
@@ -195,8 +109,7 @@ card{
         <a href="/admin/posts"><h5 class="card-header text-white bg-info border-info">Posts</h5></a>
         <div class="card-body">
           <h3>{{ $posts }}</h3>
-          <a href="/admin/posts">show details</a>
-          <p class="card-text">Show all post</p>
+          <a href="/admin/posts">Show all post</a>
         </div>
         <div class="card-footer bg-transparent border-info">
           <small>Last created post</small><br>
@@ -212,8 +125,7 @@ card{
         <a href="/admin/comments"><h5 class="card-header text-white bg-secondary border-secondary">Comments</h5></a>
         <div class="card-body">
           <h3>{{ count($comments) }}</h3>
-          <a href="/admin/comments">show details</a>
-          <p class="card-text"><small class="text-muted">Show all comments</small></p>
+          <a href="/admin/comments">Show all comments</a>
         </div>
         <div class="card-footer bg-transparent border-secondary">
           <small>Last writted comment</small><br>
@@ -231,7 +143,70 @@ card{
     </div>
   </div>
   <hr>
+  <div class="row">
 
+    <div class="col-sm-3">
+      <div class="card p-2 style="width: 18rem;"">
+        <a href="#"><h5 class="card-header text-white bg-secondary border-secondary">Admins</h5></a>
+        <div class="card-body">
+          @foreach ($users_admin as $key => $admin)
+            {{ $admin->name }} <br>
+          @endforeach
+        </div>
+        <div class="card-footer bg-transparent border-secondary">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="card p-2 style="width: 18rem;"">
+        <a href="#"><h5 class="card-header text-dark bg-white border-dark">White list</h5></a>
+        <div class="card-body" style="overflow-y: scroll; height: 100px">
+          @foreach ($white_list as $key => $list)
+            <li>
+              {{ $list->ip }}
+              <a href="{{ route('ip_white.delete', $list->ip) }}"
+                onclick="return confirm('Are you sure you want to delete this post? \n{{ $list->ip }}');">
+                <i class="fas fa-trash"></i>
+              </a>
+            </li>
+          @endforeach
+        </div>
+        <div class="card-footer bg-transparent border-dark">
+          <form class="" action="{{ route('white_list') }}" method="post">
+            @csrf
+            <input type="text" name="white_list_ip" placeholder="add ip to white list..." value="" maxlength="15">
+          </form>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card p-2 style="width: 18rem;"">
+        <a href="#"><h5 class="card-header text-white bg-dark border-dark">Black list</h5></a>
+        <div class="card-body" style="overflow-y: scroll; height: 100px">
+          @foreach ($black_list as $key => $list)
+            <li>
+              {{ $list->ip }}
+              <a href="{{ route('ip.delete', $list->ip) }}"
+                onclick="return confirm('Are you sure you want to delete this post? \n{{ $list->ip }}');">
+                <i class="fas fa-trash"></i>
+              </a>
+            </li>
+          @endforeach
+        </div>
+        <div class="card-footer bg-transparent border-dark">
+          <form class="" action="{{ route('black_list') }}" method="post">
+            @csrf
+            <input type="text" name="black_list_ip" placeholder="add ip to black list" value="">
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <hr>
   <div class="row">
     <div class="col-sm-3">
       <h2>Visits statistics:</h2>
@@ -296,19 +271,11 @@ card{
         data: <?= $users_per_month ?>,
         backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+        'rgba(54, 162, 235, 0.2)'
         ],
         borderColor: [
         'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
+        'rgba(54, 162, 235, 1)'
         ],
         borderWidth: 1
       }]
