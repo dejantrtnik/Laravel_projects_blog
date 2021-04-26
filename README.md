@@ -47,6 +47,8 @@ Counting real time logged users
 First visit with block or allow option
 ![admin_dashboard_first_visit](https://user-images.githubusercontent.com/46469418/115117947-47516600-9fa1-11eb-8a8f-1467a0b14c4a.png)
 
+Admin - server info - IN PROGRESS
+![admin_info_server](https://user-images.githubusercontent.com/46469418/116123909-dce8a600-a6c3-11eb-824f-c8065b4887ba.png)
 
 Admin dashboard: edit, roles, delete, etc\
  picture ...
