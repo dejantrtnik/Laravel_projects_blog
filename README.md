@@ -36,11 +36,13 @@ picture ...
 
 
 Admin dashboard
-![admin_dashboard_4](https://user-images.githubusercontent.com/46469418/114918740-ba36d180-9e27-11eb-836b-4cbbd250220e.png)
+![admin_dashboard_6](https://user-images.githubusercontent.com/46469418/116086377-0abbf380-a6a0-11eb-93bb-29ea10d662ae.png)
+
 ip block is protected over .htaccess 😉
 
-Ulala counting real time logged users
-![admin_dashboard_5](https://user-images.githubusercontent.com/46469418/115039009-5ae0cc00-9ed0-11eb-8ca1-1cea33078093.png)
+Counting real time logged users
+![admin_dashboard_7](https://user-images.githubusercontent.com/46469418/116086595-435bcd00-a6a0-11eb-8dc9-7779acd44f09.png)
+
 
 First visit with block or allow option
 ![admin_dashboard_first_visit](https://user-images.githubusercontent.com/46469418/115117947-47516600-9fa1-11eb-8a8f-1467a0b14c4a.png)
