@@ -10,7 +10,7 @@
   @foreach ($ip_country as $key => $value_country)
   @endforeach
 
-  <h1>Show - detail - {{ $value_country->country }}</h1>
+  <h2>Show detailed: {{ $value_country->country }} - {{ $value_country->ip }}</h2>
   <hr>
   <a class="btn btn-primary" href="{{ URL::previous() }}">Back</a>
   <a class="btn btn-primary" href="/admin">Home admin</a>

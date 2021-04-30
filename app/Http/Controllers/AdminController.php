@@ -67,15 +67,7 @@ class AdminController extends Controller
       }
 
       function countryMonthCountJson(){
-        //$country = [];
-        //dd($country);
         $country = DB::select("SELECT country FROM ip_infos GROUP by country");
-        //$country = array();
-
-        //$country = DB::table('ip_infos')
-        //           ->select('country', DB::raw('count(*) as count'))
-        //           ->groupBy('country')
-        //           ->get();
         return json_encode($country);
       }
 
@@ -84,8 +76,6 @@ class AdminController extends Controller
         $users_count = User::whereBetween('created_at', [$datein, $dateout])->count();
         return $users_count;
       }
-
-      //dd(geoapify('192.168.0.350'));
 
       if (auth()->user()->role == 'admin') {
         $data = [
@@ -107,8 +97,8 @@ class AdminController extends Controller
         'countryMonthCountJson' => countryMonthCountJson(),
         'white_list' => WhiteList::All(),
         'black_list' => BlackList::All(),
-        'ipwhois' => ipwhois('192.168.0.350'),
-        'geoapify' => geoapify('192.168.0.350'),
+        //'ipwhois' => ipwhois('192.168.0.350'),
+        //'geoapify' => geoapify('192.168.0.350'),
         'months' => json_encode([
         'January',
         'February',
@@ -127,14 +117,11 @@ class AdminController extends Controller
 
         return view('admin.admin')->with($data);
       }
-
     }
 
-    //dd(Auth::check());
     public function edit_role(request $role)
     {
       $user = User::find($role['id']);
-      //dd($user);
       $user->role = $role['role'];
       $user->save();
       return redirect('/admin/users')->with('success', 'Role added - '. $role['role'] );
@@ -146,10 +133,10 @@ class AdminController extends Controller
       $blackList = BlackList::where('ip', $list['white_list_ip'])->exists();
 
       if ($blackList == true) {
-        return redirect('/admin')->with('error', 'IP exist in BLACK list database - '. $list['white_list_ip'] );
+        return redirect(url()->previous())->with('error', 'IP exist in BLACK list database - '. $list['white_list_ip'] );
       }
       if ($whiteList == true) {
-        return redirect('/admin')->with('error', 'IP already exist in database - '. $list['white_list_ip'] );
+        return redirect(url()->previous())->with('error', 'IP already exist in database - '. $list['white_list_ip'] );
       }
       $white_list = new WhiteList();
       $white_list->ip = $list['white_list_ip'];
@@ -163,10 +150,10 @@ class AdminController extends Controller
       $whiteList = WhiteList::where('ip', $list['black_list_ip'])->exists();
 
       if ($whiteList == true) {
-        return redirect('/admin')->with('error', 'IP exist in WHITE list database - '. $list['black_list_ip'] );
+        return redirect(url()->previous())->with('error', 'IP exist in WHITE list database - '. $list['black_list_ip'] );
       }
       if ($blackList == true) {
-        return redirect('/admin')->with('error', 'IP already exist in database - '. $list['black_list_ip'] );
+        return redirect(url()->previous())->with('error', 'IP already exist in database - '. $list['black_list_ip'] );
       }
       $blackList = new BlackList();
       $blackList->ip = $list['black_list_ip'];

@@ -119,10 +119,10 @@ class PagesController extends Controller
     */
     ip_collect();
     $data = [
-    'title' => 'This is contact',
+    'title' => '',
     'user' => User::find($id),
     ];
-    $title = 'This is contact';
+
     return view('pages.contact')->with($data);
   }
 

@@ -8,6 +8,7 @@ use App\Models\ip;
 use App\Models\visits;
 use App\Models\ipInfos;
 use App\Models\BlackList;
+use App\Models\WhiteList;
 use DB;
 
 
@@ -21,7 +22,8 @@ class IpController extends Controller
     }
     if (auth()->user()->role == 'admin') {
       $data = [
-        'ip' => ipInfos::all(),
+        //'ip' => ipInfos::all(),
+        'ip' => ipInfos::orderBy('created_at', 'desc')->get(),
       ];
 
       //return view('admin.admin')->with($data);
@@ -57,10 +59,11 @@ class IpController extends Controller
       return DB::select("SELECT country FROM ip_infos GROUP by country");
     }
 
-    //dd(group_country());
     $data = [
       'ip' => visits::where('ipStrlen', $table)->get(),
       'ip_country' => ipInfos::where('country', $table)->get(),
+      'query_black_list' => BlackList::all(),
+      'query_white_list' => WhiteList::all(),
       'title' => $table,
       //'ip_country' =>group_country(),
     ];
@@ -108,9 +111,9 @@ class IpController extends Controller
         Storage::disk('public_custom')->append('.htaccess', 'Deny from '.$value->ip);
       }
 
-      return redirect('/admin')->with('success', 'Ip deleted - '.$ip);
+      return redirect(url()->previous())->with('success', 'Ip deleted - '.$ip);
     }else {
-      return redirect('/admin')->with('error', 'Ip NOT deleted');
+      return redirect(url()->previous())->with('error', 'Ip NOT deleted');
     }
   }
 
@@ -118,7 +121,7 @@ class IpController extends Controller
   {
     if ( auth()->user()->role == 'admin'){
       $white_list = DB::delete(" DELETE FROM white_list WHERE ip = '$ip' ");
-      return redirect('/admin')->with('success', 'Ip deleted - '. $ip);
+      return redirect(url()->previous())->with('success', 'Ip deleted - '. $ip);
 
     }
   }
