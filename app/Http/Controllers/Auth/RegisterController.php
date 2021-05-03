@@ -33,9 +33,6 @@ class RegisterController extends Controller
 
     protected function redirectTo()
     {
-        if (auth()->user()->role == 'admin') {
-            return '/admin';
-        }
         return '/dashboard';
     }
 
@@ -58,10 +55,38 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+      function telegram($data){
+        $bot = env('BOT');
+        $id = env('ID');
+        $message =
+        'New user register'               ."\n".
+        'Name: '       .$data['name']            ."\n".
+        'Email: '      .$data['email']           ."\n".
+        'Date: '       .date("H:i:s ( d-m-Y )") ."\n".
+        'Ip address: ' .request()->server('REMOTE_ADDR');
+
+        $url = 'https://api.telegram.org/bot'. $bot . '/sendMessage';
+        $data = array(
+          'chat_id' => $id,
+          'text'=> $message
+        );
+        $options = array(
+          'http' => array(
+            'method' =>'POST',
+            'header' =>"Content-Type:application/x-www-form-urlencoded\r\n",
+            'content'=> http_build_query($data)
+            ,),);
+            $context = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+      }
+
+
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            telegram($data),
         ]);
     }
 }

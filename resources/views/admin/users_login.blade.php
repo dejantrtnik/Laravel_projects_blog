@@ -21,15 +21,13 @@
         <h3>{{ $user->name }}</h3>
       @endforeach
       <hr>
-
-      @foreach ($user_details as $key => $user_detail)
-        @php
-        $created_at = date("H:i:s - d.m.Y", strtotime($user_detail->created_at));
-        @endphp
-        {{ $created_at }} - <a href="/admin/ip/{{ $user_detail->ipStrlen }}">{{ $user_detail->ipStrlen }}</a> <br>
-
-      @endforeach
       <div class="row">
+        @foreach ($user_details as $key => $user_detail)
+          @php
+          $created_at = date("H:i:s - d.m.Y", strtotime($user_detail->created_at));
+          @endphp
+          {{ $created_at }} - <a href="/admin/ip/{{ $user_detail->ipStrlen }}">{{ $user_detail->ipStrlen }}</a><br>
+        @endforeach
 
       </div>
       <hr>

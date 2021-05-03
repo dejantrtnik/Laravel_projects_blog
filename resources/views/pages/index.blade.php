@@ -57,6 +57,7 @@ ini_set('memory_limit', '25M');
             </p>
             <a href="/about" class="btn btn-outline-success btn-lg">About</a>
           </div>
+
           <div class="col-lg-6">
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
@@ -76,9 +77,17 @@ ini_set('memory_limit', '25M');
                 </div>
               </div>
             </div>
-
           </div>
         </div>
+        <br>
+        @guest
+          @if (Route::has('login'))
+            <strong>Join us for reading posts and creating them</strong> <br>
+            <a href="{{ route('login') }}">{{ __('Login') }}</a> or
+            <a href="{{ route('register') }}"> {{ __('Register') }}</a>
+
+          @endif
+        @endguest
       </div>
     </div>
     <hr>

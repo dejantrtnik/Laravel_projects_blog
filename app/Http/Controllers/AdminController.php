@@ -92,7 +92,7 @@ class AdminController extends Controller
         'last_post' => Post::orderBy('created_at', 'desc')->first(),
         'last_comment' => Comments::orderBy('created_at', 'desc')->first(),
         'users_admin' => DB::select("SELECT * FROM users WHERE role = 'admin'"),
-        'users_guest' => DB::select("SELECT * FROM users WHERE role = 'guest' ORDER BY created_at DESC LIMIT 1"),
+        'users_guest' => DB::select("SELECT * FROM users WHERE role = 'guest' "),
         'users_member' => DB::select("SELECT * FROM users WHERE role = 'member'"),
         'countryMonthCountJson' => countryMonthCountJson(),
         'white_list' => WhiteList::All(),
