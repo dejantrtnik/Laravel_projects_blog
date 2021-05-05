@@ -24,11 +24,24 @@ class PagesController extends Controller
     ip_collect();
 
 
+    function rpi(){
+
+      if (@file_get_contents('http://192.168.0.147/moduliRPI/sensor_H2O.php') === false) {
+        return 'empty temp';
+      }
+      else {
+        return @file_get_contents('http://192.168.0.147/moduliRPI/sensor_H2O.php');
+      }
+    }
+
+
+    //dd(rpi());
+
     $data = [
       'title' => 'This is about',
       'ip' => request()->server('SERVER_ADDR'),
       'request_url' => request()->server('REQUEST_URI'),
-      'temp_data_rpi' => file_get_contents('http://192.168.0.147/moduliRPI/sensor_H2O.php'),
+      'temp_data_rpi' => rpi(),
       //'temp_data_rpi' => 'temp',
     ];
 
@@ -180,6 +193,31 @@ class PagesController extends Controller
     //return view('pages.services');
     return view('pages.coding.form')->with($data);
   }
+
+  public function show_video()
+  {
+    /*
+    |--------------------------------------------------------------------------
+    | ip_collect()
+    |--------------------------------------------------------------------------
+    | /var/www/html/config/custom_functions.php
+    | collecting ip numbers in db
+    */
+    ip_collect();
+    //dd();
+    if (auth()->user() == null) {
+      return redirect('/login');
+    }
+    $data = [
+    'title' => 'show_video',
+    'video' => 'http://193.77.83.59:4747/video',
+
+    ];
+    //return view('pages.services');
+    return view('pages.show_video')->with($data);
+  }
+
+
 
 
 }

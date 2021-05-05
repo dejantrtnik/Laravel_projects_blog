@@ -24,8 +24,6 @@
 <div class="col-lg-12">
   <i class="fab fa-facebook-square"></i>
   <i class="fab fa-youtube-square"></i>
-
-
   <i class="fab fa-github-square"></i>
 
 </div>

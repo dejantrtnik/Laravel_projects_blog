@@ -4,7 +4,6 @@ ini_set('memory_limit', '25M');
 @endphp
 <style type="text/css">
 
-
 .jumbotron-billboard .img {
   margin-bottom: 0px;
   opacity: 0.2;
@@ -61,20 +60,28 @@ ini_set('memory_limit', '25M');
           <div class="col-lg-6">
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
+
                 <div class="carousel-item active">
                   Temperature in Domžale
                   <h2>{{ $temp_data_rpi }} °C</h2>
                 </div>
+
+                <div class="carousel-item">
+                  <h4 class="card-title">Cam - Live - in progress</h4>
+                  <a href="{{ route('show_video') }}" class="btn btn-primary">Live cam</a>
+                </div>
+
                 <div style="max-height: 100px; weight: auto;" class="carousel-item">
                   <h5 class="card-title">Measurements in center Domžale</h5>
                   <a href="/custom/sites/weather" class="btn btn-primary">Show data</a>
-
                 </div>
+
                 <div class="carousel-item">
                   <h5 class="card-title">Blog</h5>
                   <a href="/posts" class="btn btn-primary">Blog</a>
-
                 </div>
+
+
               </div>
             </div>
           </div>
@@ -92,6 +99,7 @@ ini_set('memory_limit', '25M');
     </div>
     <hr>
     <div class="container">
+
       <div class="card">
         <div class="card-header">
           <h3>Weather</h3>
@@ -106,6 +114,7 @@ ini_set('memory_limit', '25M');
           <a href="/custom/sites/weather" class="btn btn-primary">Details</a>
         </div>
       </div>
+
       <hr>
       <div class="card">
         <div class="card-header">
@@ -122,58 +131,8 @@ ini_set('memory_limit', '25M');
           <a href="/custom/sites/iplocation/" class="btn btn-primary">Show detail</a>
         </div>
       </div>
-      <hr>
 
-      <!--
-      <hr>
-      <div class="card">
-      <div class="card-header">
-      <h3>Computers</h3>
     </div>
-    <div class="card-body">
-    <h5 class="card-title">Hardwear</h5>
-    <p class="card-text">Links</p>
-    <ul>
-    <li><a href="#">Link</a></li>
-    <li><a href="#">Link</a></li>
-  </ul>
-  <a href="#" class="btn btn-primary">Read more</a>
-</div>
-</div>
-<hr>
-<div class="card">
-  <div class="card-header">
-    <h3>Software</h3>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Software</h5>
-    <p class="card-text">Links</p>
-    <ul>
-      <li><a href="#">Windows</a></li>
-      <li><a href="#">Linux</a></li>
-    </ul>
-    <a href="#" class="btn btn-primary">Read more</a>
-  </div>
-</div>
-<hr>
-<div class="card">
-  <div class="card-header">
-    <h3>Coding</h3>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Computer Lenguage</h5>
-    <p class="card-text">Links</p>
-    <ul>
-      <li><a href="#">PHP</a></li>
-      <li><a href="#">Python</a></li>
-    </ul>
-    <a href="#" class="btn btn-primary">Read more</a>
-  </div>
-</div>
--->
+    <br>
 
-</div>
-
-
-<br>
-@endsection
+  @endsection

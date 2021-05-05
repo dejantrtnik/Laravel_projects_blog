@@ -61,9 +61,12 @@
     </div>
   </li>
 
+
 </ul>
 </div>
 
+<a href="{{ route('show_video') }}" class="btn btn-primary">Live cam</a>
+<li class="navbar-nav justify-content-center"><br> </li>
 <li class="navbar-nav justify-content-center">
   {{ session('count_logged_users') }}
   @php
@@ -99,7 +102,7 @@
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
           {{ Auth::user()->name }}
         </a>
-        
+
 
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
           @if (auth()->user()->role == 'admin')

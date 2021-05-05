@@ -338,6 +338,7 @@
             <input class="form-control" autocomplete="off" class="form-control" name="search" placeholder="Search posts...">
           </form>
           <br>
+
           <div class="card p-2">
             @if (count($posts) > 0)
               <h4>Last Blog posts</h4>
@@ -354,8 +355,55 @@
             @else
               <p>No posts</p>
             @endif
-
           </div>
+
+          <hr>
+          <div class="card p-2">
+            <h4>Links:</h4>
+            <a href="https://github.com/dejantrtnik"><i class="fab fa-github-square"></i> Github</a>
+            <a href="https://www.facebook.com/"><i class="fab fa-facebook-square"></i> Facebook</a>
+            <a href="https://www.instagram.com/"><i class="fab fa-instagram-square"></i> Instagram</a>
+          </div>
+
+          <hr>
+          <div class="card p-2">
+            <h4>Home</h4>
+            <a href="/custom/sites/weather"><i class="fab fa-weather-square"></i> Weather</a>
+            <a href="/custom/sites/iplocation/"><i class="fab fa-location-square"></i> Ip location</a>
+          </div>
+
+          <!-- FOR TESTING -->
+          <hr>
+          <style>
+          #video_container {
+            margin: 0px auto;
+            width: 220px;
+            height: 170px;
+            /*border: 10px #333 solid;*/
+          }
+          #videoElement {
+            width: 220px;
+            height: 170px;
+            /*background-color: #666;*/
+          }
+          </style>
+          <div class="card p-2">
+            <h4>Cam - Live - in progress</h4>
+            <div id="video_container">
+              @if (!Auth::guest())
+
+                <a href="{{ route('show_video') }}"><img src="http://193.77.83.59:4747/video" alt="" id="" width="211" height="120"></a>
+              @else
+                <strong>Join us for viewing Live CAM</strong> <br>
+                <a href="{{ route('login') }}">{{ __('Login') }}</a> or
+                <a href="{{ route('register') }}"> {{ __('Register') }}</a>
+                <br>
+              @endif
+              1419 / 798 ( test )
+            </div>
+          </div>
+          <!-- / FOR TESTING -->
+
         </div>
       </div>
     </div>

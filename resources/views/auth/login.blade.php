@@ -1,5 +1,14 @@
 @extends('layouts.app')
-
+@php
+/*
+|--------------------------------------------------------------------------
+| ip_collect()
+|--------------------------------------------------------------------------
+| /var/www/html/config/custom_functions.php
+| collecting ip numbers in db
+*/
+ip_collect();
+@endphp
 @section('body')
 <div class="container">
     <div class="row justify-content-center">

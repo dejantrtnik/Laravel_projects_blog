@@ -2,6 +2,7 @@
 
 
 @section('body')
+  <script src="/vendor/ckeditor/ckeditor/build/ckeditor.js"></script>
   @if (auth()->user()->role == 'admin' || auth()->user()->role == 'member')
     <a class="btn btn-primary" href="{{ URL::previous() }}">Cancel editing</a>
     <br><hr><br>
@@ -14,7 +15,7 @@
     </div>
     <div class="form-group">
       {{ Form::label('body', 'Title') }}
-      {{ Form::textarea('body', $post->body, ['id' => 'editor-post', 'class' => 'form-control', 'placeholder' => 'Some text...']) }}
+      {{ Form::textarea('body', $post->body, ['id' => 'editor', 'class' => 'form-control', 'placeholder' => 'Some text...']) }}
     </div>
     <img style="width: 20%;" src="/public/storage/cover_images/{{ $post->cover_image }}" alt="">
     <div class="form-group">
@@ -28,6 +29,72 @@
   @endif
   <script src="/vendor/ckeditor/ckeditor/ckeditor.js"></script>
   <script>
-  CKEDITOR.replace( 'editor-post' );
+
+  	ClassicEditor
+  		.create( document.querySelector( '#editor' ), {
+        toolbar: {
+					items: [
+						'heading',
+						'|',
+						'bold',
+						'italic',
+						'link',
+						'bulletedList',
+						'numberedList',
+						'|',
+						'alignment',
+						'|',
+						'outdent',
+						'indent',
+						'|',
+						'blockQuote',
+						'insertTable',
+						'mediaEmbed',
+						'undo',
+						'redo',
+						'|',
+						'code',
+						'codeBlock',
+						'|',
+						'fontColor',
+						'fontSize',
+						'fontFamily',
+						'highlight',
+						'|',
+						'horizontalLine',
+						'htmlEmbed',
+						'imageInsert',
+						'pageBreak',
+						'specialCharacters'
+					]
+				},
+				language: 'en',
+				image: {
+					toolbar: [
+						'imageTextAlternative',
+						'imageStyle:full',
+						'imageStyle:side',
+						'linkImage'
+					]
+				},
+				table: {
+					contentToolbar: [
+						'tableColumn',
+						'tableRow',
+						'mergeTableCells',
+						'tableCellProperties',
+						'tableProperties'
+					]
+				},
+				licenseKey: '',
+
+
+			} )
+  		.then( editor => {
+  			window.editor = editor;
+  		} )
+  		.catch( err => {
+  			console.error( err.stack );
+  		} );
   </script>
 @endsection

@@ -115,6 +115,7 @@ Route::get('/about', [PagesController::class, 'about']);
 Route::get('/pages/contact/{id}', [PagesController::class, 'contact']);
 Route::post('/pages/contact/', 'App\Http\Controllers\PagesController@telegram')->name('telegram');
 Route::get('/pages/coding/{id}', 'App\Http\Controllers\PagesController@coding')->name('form');
+Route::get('/show_video', 'App\Http\Controllers\PagesController@show_video')->name('show_video');
 //Route::get('/pages/coding/php/', 'App\Http\Controllers\PagesController@coding')->name('form');
 
 

@@ -11,6 +11,8 @@ form{
   align-items: center;
 }
 </style>
+
+
 @section('body')
   <body>
     <h1>First visit</h1>
@@ -36,6 +38,10 @@ form{
           <th>Latutude</th>
           <th>Longitude</th>
           <th>First visit</th>
+          <th>White list</th>
+          <th></th>
+          <th>Black list</th>
+          <th></th>
         </tr>
       </thead>
       @foreach ($ip as $key => $ips)
@@ -43,9 +49,6 @@ form{
         $query_black_list = DB::table('black_list')->where('ip', $ips->ip)->get();
         $query_white_list = DB::table('white_list')->where('ip', $ips->ip)->get();
         $date = date("d.m.Y - H:i:s", strtotime($ips->created_at));
-        // temporary solution
-        $white_list = \DB::select("SELECT * FROM white_list WHERE ip = '$ips->ip'");
-        $black_list = \DB::select("SELECT * FROM black_list WHERE ip = '$ips->ip'");
         @endphp
         <tbody>
           <tr>
@@ -56,79 +59,74 @@ form{
             <th>{{ $ips->latitude }}</th>
             <th>{{ $ips->longitude }}</th>
             <th>{{ $date }}</th>
+            <th>
+              <form class="" action="{{ route('white_list') }}" method="post">
+                @csrf
+                <input type="text" name="white_list_ip" value="{{ $ips->ip }}" hidden>
+                <button type="submit" class="fas fa-database" style="color: green;" name="button"></button>
+              </form>
+            </th>
             <th style="color: green;">
-              @if (empty($white_list))
-                <th>
-                  <form class="" action="{{ route('white_list') }}" method="post">
-                    @csrf
-                    <input type="text" name="white_list_ip" value="{{ $ips->ip }}" hidden>
-                    <button type="submit" class="fas fa-wifi" style="color: green;" name="button"></button>
-                  </form>
-                </th>
-              @else
-                <th>
-                  not count
-                  <a class="fas fa-trash" href="{{ route('ip_white.delete', $ips->ip) }}"
-                    onclick="return confirm('Are you sure you want to delete this post? \n{{ $ips->ip }}');">
-                  </a>
-                </th>
-              @endif
+              @foreach ($query_white_list as $key => $value)
+                @if ($key == 0)
+                  {{ 'allowed' }}
+                @endif
+              @endforeach
+            </th>
+            <th>
+              <form class="" action="{{ route('black_list') }}" method="post" onchange='this.form.submit()'>
+                @csrf
+                <input type="text" name="black_list_ip" value="{{ $ips->ip }}" hidden>
+                <button type="submit" class="fas fa-database" style="color: red;" name="button"></button>
+              </form>
             </th>
             <th style="color: red;">
-              @if (empty($black_list) && empty($white_list))
-                <th>
-                  <form class="" action="{{ route('black_list') }}" method="post" onchange='this.form.submit()'>
-                    @csrf
-                    <input type="text" name="black_list_ip" value="{{ $ips->ip }}" hidden>
-                    <button type="submit" class="fas fa-database" style="color: red;" name="button"></button>
-                  </form>
-                </th>
-              @else
-                @foreach ($query_black_list as $key => $value)
-                  @if ($key == 0)
-
-                    {{ 'blocked' }}
-                    <a class="fas fa-trash" href="{{ route('ip.delete', $value->ip) }}"
-                      onclick="return confirm('Are you sure you want to delete this post? \n{{ $value->ip }}');">
-                    </a>
-                  @endif
-                @endforeach
-              @endif
+              @foreach ($query_black_list as $key => $value)
+                @if ($key == 0)
+                  {{ 'blocked' }}
+                @endif
+              @endforeach
             </th>
+
           </tr>
         </tbody>
       @endforeach
     </table>
+
     <br><hr><br>
+
   </body>
+
   <script type="text/javascript">
-    ;(function($){
-      /**
-      * Store scroll position for and set it after reload
-      *
-      * @return {boolean} [loacalStorage is available]
-      */
-      $.fn.scrollPosReaload = function(){
-        if (localStorage) {
-          var posReader = localStorage["posStorage"];
-          if (posReader) {
-            $(window).scrollTop(posReader);
-            localStorage.removeItem("posStorage");
-          }
-          $(this).click(function(e) {
-            localStorage["posStorage"] = $(window).scrollTop();
-          });
+  ;(function($){
 
-          return true;
+    /**
+    * Store scroll position for and set it after reload
+    *
+    * @return {boolean} [loacalStorage is available]
+    */
+    $.fn.scrollPosReaload = function(){
+      if (localStorage) {
+        var posReader = localStorage["posStorage"];
+        if (posReader) {
+          $(window).scrollTop(posReader);
+          localStorage.removeItem("posStorage");
         }
+        $(this).click(function(e) {
+          localStorage["posStorage"] = $(window).scrollTop();
+        });
 
-        return false;
+        return true;
       }
-      /* ================================================== */
-      $(document).ready(function() {
-        // Feel free to set it for any element who trigger the reload
-        $('form').scrollPosReaload();
-      });
-    }(jQuery));
+
+      return false;
+    }
+    /* ================================================== */
+    $(document).ready(function() {
+      // Feel free to set it for any element who trigger the reload
+      $('form').scrollPosReaload();
+    });
+  }(jQuery));
   </script>
+
 @endsection
