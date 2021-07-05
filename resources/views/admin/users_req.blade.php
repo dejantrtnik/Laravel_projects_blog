@@ -51,9 +51,11 @@
                 <th>
                   <select class="form-control" action="" name="role">
                     <option style="color: red;" name="role" value="{{ $user->role }}">{{ $user->role }}</option>
-                    <option value=""></option>
+                    <optgroup label="______________">
                     <option style="color: red;" name="role" value="guest">guest</option>
                     <option name="role" value="member">member</option>
+                    <option name="role" value="blocked">BLOCKED</option>
+                    <optgroup label="______________">
                     <option name="role" value="admin">admin</option>
                   </select>
                 </th>

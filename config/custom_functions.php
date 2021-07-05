@@ -4,7 +4,33 @@ use App\Models\visits;
 use App\Models\WhiteList;
 use App\Models\BlackList;
 
+function rpi(){
+  if (@file_get_contents('http://192.168.0.147/moduliRPI/sensor_H2O.php') === false) {
+    return 'empty temp';
+  }
+  else {
+    return @file_get_contents('http://192.168.0.147/moduliRPI/sensor_H2O.php');
+  }
+}
 
+function photo_ip_cam(){
+      $directory = 'storage/app/public/photo_ip_cam';
+      $static_no_img = 'storage/app/public/static_images/live_view_progress.png';
+      $images = glob($directory . "/*.jpg");
+      $i = 0;
+      foreach ($images as $image) {
+        $i++;
+      }
+      if ($i > 1) {
+        $img = $image;
+      }
+      if (empty($img)) {
+        $img = $static_no_img;
+        return $img;
+      }else {
+        return $img;
+      }
+    }
 
 function remove_accent($str)
 {
@@ -78,6 +104,9 @@ function ip_collect(){
     }else {
       $visits->ipStrlen    = post_slug($ip);
       $visits->request_url = ($request_url);
+      if (!empty(auth()->user()->id)) {
+        $visits->user_id = (auth()->user()->id);
+      }
       $visits->save();
     }
   }else {

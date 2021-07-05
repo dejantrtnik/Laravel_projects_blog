@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -12,63 +11,69 @@ use App\Models\userLogin;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+  /*
+  |--------------------------------------------------------------------------
+  | Login Controller
+  |--------------------------------------------------------------------------
+  |
+  | This controller handles authenticating users for the application and
+  | redirecting them to your home screen. The controller uses a trait
+  | to conveniently provide its functionality to your applications.
+  |
+  */
 
-    use AuthenticatesUsers;
+  use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/dashboard';
+  /**
+  * Where to redirect users after login.
+  *
+  * @var string
+  */
+  protected $redirectTo = '/dashboard';
 
-    protected function redirectTo()
-    {
-      $user = new userLogin;
-      $user->user_id = auth()->user()->id;
-      $user->ipStrlen = post_slug(request()->server('REMOTE_ADDR'));
-      $user->save();
+  protected function redirectTo()
+  {
+    $user = new userLogin;
+    $user->user_id = auth()->user()->id;
+    $user->ipStrlen = post_slug(request()->server('REMOTE_ADDR'));
+    $user->save();
 
-        if (auth()->user()->role == 'admin') {
-            return '/admin';
-        }
-        return '/dashboard';
+    if (auth()->user()->role == 'blocked') {
+      Auth::logout();
+      return '/login';
     }
 
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+
+    if (auth()->user()->role == 'admin') {
+      return '/admin';
     }
+    return '/dashboard';
+  }
 
-    /**
-     * The user has been authenticated.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
-     */
-    protected function authenticated()
-    {
-        Auth::logoutOtherDevices(request('password'));
-    }
+  public function __construct()
+  {
+    $this->middleware('guest')->except('logout');
+  }
 
-    // public function username()
-    // {
-    //     return 'username';
-    // }
+  /**
+  * The user has been authenticated.
+  *
+  * @param  \Illuminate\Http\Request  $request
+  * @param  mixed  $user
+  * @return mixed
+  */
+  protected function authenticated()
+  {
+    Auth::logoutOtherDevices(request('password'));
+  }
 
-    //if (Auth::viaRemember()) {
-    //    //
-    //}
+  // public function username()
+  // {
+  //     return 'username';
+  // }
+
+  //if (Auth::viaRemember()) {
+  //    //
+  //}
 
 }

@@ -36,19 +36,9 @@ picture ...
 
 
 Admin dashboard
-![admin_dashboard_6](https://user-images.githubusercontent.com/46469418/116086377-0abbf380-a6a0-11eb-93bb-29ea10d662ae.png)
-
+![admin_dashboard_4](https://user-images.githubusercontent.com/46469418/114918740-ba36d180-9e27-11eb-836b-4cbbd250220e.png)
 ip block is protected over .htaccess 😉
 
-Counting real time logged users
-![admin_dashboard_7](https://user-images.githubusercontent.com/46469418/116086595-435bcd00-a6a0-11eb-8dc9-7779acd44f09.png)
-
-
-First visit with block or allow option
-![admin_dashboard_first_visit](https://user-images.githubusercontent.com/46469418/115117947-47516600-9fa1-11eb-8a8f-1467a0b14c4a.png)
-
-Admin - server info - IN PROGRESS - ( sample from virtual maschine - Hyper-V )
-![admin_info_server](https://user-images.githubusercontent.com/46469418/116123909-dce8a600-a6c3-11eb-824f-c8065b4887ba.png)
 
 Admin dashboard: edit, roles, delete, etc\
  picture ...

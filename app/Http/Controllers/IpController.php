@@ -9,6 +9,7 @@ use App\Models\visits;
 use App\Models\ipInfos;
 use App\Models\BlackList;
 use App\Models\WhiteList;
+use App\Models\User;
 use DB;
 
 
@@ -40,7 +41,7 @@ class IpController extends Controller
     }
 
     $data = [
-      'ip' => visits::where('ipStrlen', $table)->get(),
+      'ip' => visits::orderBy('created_at', 'desc')->where('ipStrlen', $table)->get(),
       'ip_country' => ipInfos::where('ipStrlen', $table)->get(),
     ];
     return view('admin.ip.show')->with($data);
@@ -49,8 +50,6 @@ class IpController extends Controller
 
   public function showCountry($table)
   {
-    //dd($table);
-
     if (auth()->user() == null || auth()->user()->role != 'admin') {
       return redirect('/posts')->with('error', 'Unauthorized page');
     }
@@ -65,9 +64,23 @@ class IpController extends Controller
       'query_black_list' => BlackList::all(),
       'query_white_list' => WhiteList::all(),
       'title' => $table,
-      //'ip_country' =>group_country(),
     ];
     return view('admin.ip.country.show')->with($data);
+
+  }
+
+  public function showVisit($user_id)
+  {
+    //dd($user_id);
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/posts')->with('error', 'Unauthorized page');
+    }
+
+    $data = [
+      'users' => User::where('id', $user_id)->get(),
+      'request_url' => visits::where('user_id', $user_id)->get(),
+    ];
+    return view('admin.ip.user.show')->with($data);
 
   }
 
@@ -125,18 +138,15 @@ class IpController extends Controller
 
     }
   }
+
   public function search(Request $request)
   {
-    //dd($request);
-
     // Get the search value from the request
     $search = $request->input('search');
-
     // Search in the title and body columns from the posts table
     $data = [
       'query' => ipInfos::query()->where('ip', 'LIKE', "%{$search}%")->orWhere('country', 'LIKE', "%{$search}%")->get(),
     ];
-
     // Return the search view with the resluts compacted
     //return view('admin.ip.search', compact('query'));
     return view('admin.ip.search')->with($data);

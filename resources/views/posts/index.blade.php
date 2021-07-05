@@ -341,8 +341,8 @@
 
           <div class="card p-2">
             @if (count($posts) > 0)
-              <h4>Last Blog posts</h4>
-              @foreach ($posts as $post)
+              <h4>Last updated posts</h4>
+              @foreach ($posts_last_updated as $post)
                 <div class="well">
                   <div class="row">
                     <div class="col-md-6 col-sm-8">
@@ -355,21 +355,6 @@
             @else
               <p>No posts</p>
             @endif
-          </div>
-
-          <hr>
-          <div class="card p-2">
-            <h4>Links:</h4>
-            <a href="https://github.com/dejantrtnik"><i class="fab fa-github-square"></i> Github</a>
-            <a href="https://www.facebook.com/"><i class="fab fa-facebook-square"></i> Facebook</a>
-            <a href="https://www.instagram.com/"><i class="fab fa-instagram-square"></i> Instagram</a>
-          </div>
-
-          <hr>
-          <div class="card p-2">
-            <h4>Home</h4>
-            <a href="/custom/sites/weather"><i class="fab fa-weather-square"></i> Weather</a>
-            <a href="/custom/sites/iplocation/"><i class="fab fa-location-square"></i> Ip location</a>
           </div>
 
           <!-- FOR TESTING -->
@@ -388,21 +373,37 @@
           }
           </style>
           <div class="card p-2">
-            <h4>Cam - Live - in progress</h4>
+            <h4>Live cam</h4>
+            {{ $temp_data_rpi }} °C
             <div id="video_container">
               @if (!Auth::guest())
 
-                <a href="{{ route('show_video') }}"><img src="http://193.77.83.59:4747/video" alt="" id="" width="211" height="120"></a>
+                <a href="{{ route('show_video') }}"><img src="{{ $img }}" width="211" height="120"></a>
               @else
                 <strong>Join us for viewing Live CAM</strong> <br>
                 <a href="{{ route('login') }}">{{ __('Login') }}</a> or
                 <a href="{{ route('register') }}"> {{ __('Register') }}</a>
                 <br>
               @endif
-              1419 / 798 ( test )
+              Static image ( refresh every 30 minut - test )
             </div>
-          </div>
+          </div><hr>
           <!-- / FOR TESTING -->
+
+          <hr>
+          <div class="card p-2">
+            <h4>Links:</h4>
+            <a href="https://github.com/dejantrtnik"><i class="fab fa-github-square"></i> Github</a>
+            <a href="https://www.facebook.com/"><i class="fab fa-facebook-square"></i> Facebook</a>
+            <a href="https://www.instagram.com/"><i class="fab fa-instagram-square"></i> Instagram</a>
+          </div>
+
+          <hr>
+          <div class="card p-2">
+            <h4>Home</h4>
+            <a href="/custom/sites/weather"><i class="fab fa-weather-square"></i> Weather</a>
+            <a href="/custom/sites/iplocation/"><i class="fab fa-location-square"></i> Ip location</a>
+          </div>
 
         </div>
       </div>

@@ -13,7 +13,8 @@
   <div class="progress">
     <div class="progress-bar" role="progressbar" style="width: {{ $server['disk_total_num'] -  $server['disk_free_num'] }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
   </div><hr>
-
+  <hr>
+  
   <h3>Server FREE disk space:</h3>
   {{ $server['disk_free'] }} <br>
   <hr>

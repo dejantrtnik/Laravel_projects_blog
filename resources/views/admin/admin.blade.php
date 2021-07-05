@@ -256,7 +256,7 @@ card{
   //print_r($users_per_month);
 @endphp
 <hr>
-
+<?= $users_per_month ?>
 <canvas id="usersChart" width="300" height="100"></canvas>
 <hr>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.0/Chart.min.js"></script>

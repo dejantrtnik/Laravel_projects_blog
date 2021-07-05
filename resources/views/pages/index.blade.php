@@ -52,7 +52,7 @@ ini_set('memory_limit', '25M');
           <div class="col-lg-6">
             <h2>{{ config('app.name') }}</h2>
             <p>
-              Webpage build,
+              Webpage build
             </p>
             <a href="/about" class="btn btn-outline-success btn-lg">About</a>
           </div>
@@ -64,12 +64,19 @@ ini_set('memory_limit', '25M');
                 <div class="carousel-item active">
                   Temperature in Domžale
                   <h2>{{ $temp_data_rpi }} °C</h2>
+                  <span><a href="/custom/sites/weather">Weather</a></span>
                 </div>
 
-                <div class="carousel-item">
-                  <h4 class="card-title">Cam - Live - in progress</h4>
-                  <a href="{{ route('show_video') }}" class="btn btn-primary">Live cam</a>
-                </div>
+                @if (!Auth::guest())
+                  <div class="carousel-item">
+                    <h4>Live cam</h4>
+                    <a href="{{ route('show_video') }}"><img src="{{ photo_ip_cam() }}" width="211" height="120"></a>
+                  </div>
+                @else
+                  <div class="carousel-item">
+                    <h4><a href="{{ route('show_video') }}">Live cam</a></h4>
+                  </div>
+                @endif
 
                 <div style="max-height: 100px; weight: auto;" class="carousel-item">
                   <h5 class="card-title">Measurements in center Domžale</h5>
@@ -81,7 +88,6 @@ ini_set('memory_limit', '25M');
                   <a href="/posts" class="btn btn-primary">Blog</a>
                 </div>
 
-
               </div>
             </div>
           </div>
@@ -92,7 +98,6 @@ ini_set('memory_limit', '25M');
             <strong>Join us for reading posts and creating them</strong> <br>
             <a href="{{ route('login') }}">{{ __('Login') }}</a> or
             <a href="{{ route('register') }}"> {{ __('Register') }}</a>
-
           @endif
         @endguest
       </div>
@@ -100,6 +105,43 @@ ini_set('memory_limit', '25M');
     <hr>
     <div class="container">
 
+      <div class="card">
+        <div class="card-header">
+          <h3>Last update ( News )</h3>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><a href="{{ route('show_video') }}">Live cam ( test )</a></li>
+            <hr>
+            <li><a href="/posts">Check out the blog</a>:</li>
+            <ul>
+              @if (count($posts) > 0)
+
+                <p>Latest posts</p>
+                @foreach ($posts as $post)
+                  <div class="well">
+                    <div class="row">
+                      <div class="col-md-6 col-sm-8">
+                        <li><a href="/posts/{{$post->id}}">{{ $post->title }} </a></li>
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
+              @else
+                <p>No posts</p>
+              @endif
+            </ul><hr>
+            <li><a href="/project">Projects</a> </li>
+            <hr>
+            <li>Postavitev osebnega serverja</li>
+            <li>Izdelava spletnih strani</li>
+            <li>Izdelava modulov ( aplikacij ) za spletno stran</li><br>
+            <a href="/about" class="btn btn-primary">Contact</a>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
       <div class="card">
         <div class="card-header">
           <h3>Weather</h3>

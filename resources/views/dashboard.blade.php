@@ -34,15 +34,15 @@ ip_collect();
             @if (count($posts) > 0)
               <table class="table table-striped">
                 <tr>
-                  <th>id</th>
+                  <th>Num</th>
                   <th>Title</th>
                   <th></th>
                   <th></th>
                   <th></th>
                 </tr>
-                @foreach ($posts as $post)
+                @foreach ($posts as $key => $post)
                   <tr>
-                    <th>{{ $post->id }}</th>
+                    <th>{{ $key + 1 }}</th>
                     <th><a href="posts/{{ $post->id }}">{{ $post->title }}</a></th>
                     <th><img src="/storage/app/public/cover_images/{{ $post->cover_image }}" alt=""></th>
                     <th><a href="/posts/{{ $post->id }}/edit" class="btn btn-primary">Edit</a></th>

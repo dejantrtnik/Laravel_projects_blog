@@ -11,7 +11,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Fonts -->
@@ -21,7 +21,7 @@
   <link rel="shortcut icon" type="image/gif/png" href="/storage/app/public/static_images/logo_server_black.png">
 
   <link rel="stylesheet" href="{{ asset('resources/fontawesome/css/all.css') }}">
-  <link rel="stylesheet"
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/night-owl.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>

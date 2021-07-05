@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('body')
-  <script src="/vendor/ckeditor/ckeditor/build/ckeditor.js"></script>
   @if (auth()->user()->role == 'admin' || auth()->user()->role == 'member')
     <h3>Create</h3>
     {!! Form::open(['action' => 'App\Http\Controllers\PostsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
@@ -11,9 +10,8 @@
     </div>
     <div class="form-group">
       {{ Form::label('body', 'Body') }}
-      {{ Form::textarea('body', '', ['id' => 'editor', 'class' => 'form-control', 'placeholder' => 'Some text...']) }}
+      {{ Form::textarea('body', '', ['id' => 'editor-post', 'class' => 'editor', 'placeholder' => 'Some text...']) }}
     </div>
-    <div id="word-count"></div>
     <div class="form-group">
       {{ Form::file('cover_image') }}
     </div>
@@ -25,11 +23,12 @@
 
     <a class="btn btn-primary" href="/about">Contact</a>
   @endif
-  <script>
 
-  	ClassicEditor
-  		.create( document.querySelector( '#editor' ), {
-        toolbar: {
+  <script src="/vendor/ckeditor/ckeditor5/build/ckeditor.js"></script>
+	<script>ClassicEditor
+			.create( document.querySelector( '.editor' ), {
+
+				toolbar: {
 					items: [
 						'heading',
 						'|',
@@ -44,6 +43,7 @@
 						'outdent',
 						'indent',
 						'|',
+						'imageUpload',
 						'blockQuote',
 						'insertTable',
 						'mediaEmbed',
@@ -65,10 +65,6 @@
 						'specialCharacters'
 					]
 				},
-        wordcount: {
-          showCharCount: true,
-          maxCharCount: 10
-        },
 				language: 'en',
 				image: {
 					toolbar: [
@@ -88,47 +84,17 @@
 					]
 				},
 				licenseKey: '',
-        wordCount: {
-            onUpdate: stats => {
-                const charactersProgress = stats.characters / maxCharacters * circleCircumference;
-                const isLimitExceeded = stats.characters > maxCharacters;
-                const isCloseToLimit = !isLimitExceeded && stats.characters > maxCharacters * .8;
-                const circleDashArray = Math.min( charactersProgress, circleCircumference );
-
-                // Set the stroke of the circle to show how many characters were typed.
-                progressCircle.setAttribute( 'stroke-dasharray', `${ circleDashArray },${ circleCircumference }` );
-
-                // Display the number of characters in the progress chart. When the limit is exceeded,
-                // display how many characters should be removed.
-                if ( isLimitExceeded ) {
-                    charactersBox.textContent = `-${ stats.characters - maxCharacters }`;
-                } else {
-                    charactersBox.textContent = stats.characters;
-                }
-
-                wordsBox.textContent = `Words in the post: ${ stats.words }`;
-
-                // If the content length is close to the character limit, add a CSS class to warn the user.
-                container.classList.toggle( 'demo-update__limit-close', isCloseToLimit );
-
-                // If the character limit is exceeded, add a CSS class that makes the content's background red.
-                container.classList.toggle( 'demo-update__limit-exceeded', isLimitExceeded );
-
-                // If the character limit is exceeded, disable the send button.
-                sendButton.toggleAttribute( 'disabled', isLimitExceeded );
-            }
-        },
 
 
 			} )
-  		.then( editor => {
-  			window.editor = editor;
-        //const wordCountPlugin = editor.plugins.get( 'WordCount' );
-        //const wordCountWrapper = document.getElementById( 'word-count' );
-        //wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
-  		} )
-  		.catch( err => {
-  			console.error( err.stack );
-  		} );
-  </script>
+			.then( editor => {
+				window.editor = editor;
+			} )
+			.catch( error => {
+				console.error( 'Oops, something went wrong!' );
+				console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+				console.warn( 'Build id: c6woagc3fbb3-xo32hr58kyk4' );
+				console.error( error );
+			} );
+	</script>
 @endsection

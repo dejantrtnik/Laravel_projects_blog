@@ -212,7 +212,7 @@ class ChartJsController extends Controller
           'dataVisitors' => json_encode($datasetsVisitors),
           'monthCountJson' => monthCountJson($country),
           'search_country' => search_country($country),
-          'ip_country' => ipInfos::where('country', $country)->get(),
+          'ip_country' => ipInfos::orderBy('created_at', 'desc')->where('country', $country)->get(),
           //'AllMonthCount' => AllMonthCount(),
           'months' => json_encode([
             'January',

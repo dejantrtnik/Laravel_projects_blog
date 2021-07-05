@@ -2,7 +2,6 @@
 
 
 @section('body')
-  <script src="/vendor/ckeditor/ckeditor/build/ckeditor.js"></script>
   @if (auth()->user()->role == 'admin' || auth()->user()->role == 'member')
     <a class="btn btn-primary" href="{{ URL::previous() }}">Cancel editing</a>
     <br><hr><br>
@@ -15,7 +14,7 @@
     </div>
     <div class="form-group">
       {{ Form::label('body', 'Title') }}
-      {{ Form::textarea('body', $post->body, ['id' => 'editor', 'class' => 'form-control', 'placeholder' => 'Some text...']) }}
+      {{ Form::textarea('body', $post->body, ['id' => 'editor-post', 'class' => 'editor', 'placeholder' => 'Some text...']) }}
     </div>
     <img style="width: 20%;" src="/public/storage/cover_images/{{ $post->cover_image }}" alt="">
     <div class="form-group">
@@ -27,12 +26,11 @@
   @else
     <h1>Please contact the admin</h1>
   @endif
-  <script src="/vendor/ckeditor/ckeditor/ckeditor.js"></script>
-  <script>
+  <script src="/vendor/ckeditor/ckeditor5/build/ckeditor.js"></script>
+	<script>ClassicEditor
+			.create( document.querySelector( '.editor' ), {
 
-  	ClassicEditor
-  		.create( document.querySelector( '#editor' ), {
-        toolbar: {
+				toolbar: {
 					items: [
 						'heading',
 						'|',
@@ -47,6 +45,7 @@
 						'outdent',
 						'indent',
 						'|',
+						'imageUpload',
 						'blockQuote',
 						'insertTable',
 						'mediaEmbed',
@@ -90,11 +89,14 @@
 
 
 			} )
-  		.then( editor => {
-  			window.editor = editor;
-  		} )
-  		.catch( err => {
-  			console.error( err.stack );
-  		} );
-  </script>
+			.then( editor => {
+				window.editor = editor;
+			} )
+			.catch( error => {
+				console.error( 'Oops, something went wrong!' );
+				console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+				console.warn( 'Build id: c6woagc3fbb3-xo32hr58kyk4' );
+				console.error( error );
+			} );
+	</script>
 @endsection

@@ -121,6 +121,9 @@ class AdminController extends Controller
 
     public function edit_role(request $role)
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       $user = User::find($role['id']);
       $user->role = $role['role'];
       $user->save();
@@ -129,6 +132,9 @@ class AdminController extends Controller
 
     public function white_list(request $list)
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       $whiteList = WhiteList::where('ip', $list['white_list_ip'])->exists();
       $blackList = BlackList::where('ip', $list['white_list_ip'])->exists();
 
@@ -146,6 +152,9 @@ class AdminController extends Controller
 
     public function black_list(request $list)
     {
+      if (auth()->user() == null || auth()->user()->role != 'admin') {
+        return redirect('/');
+      }
       $blackList = BlackList::where('ip', $list['black_list_ip'])->exists();
       $whiteList = WhiteList::where('ip', $list['black_list_ip'])->exists();
 

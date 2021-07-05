@@ -91,6 +91,7 @@ Route::get('admin/ip/search', 'App\Http\Controllers\IpController@search')->name(
 Route::get('/admin/ip/', [IpController::class, 'index']);
 Route::get('/admin/ip/{table}', [IpController::class, 'show']);
 Route::get('/admin/ip/country/{table}', [IpController::class, 'showCountry']);
+Route::get('/admin/ip/user/{user_id}', [IpController::class, 'showVisit']);
 
 
 Route::get('/admin/{id}/destroy', 'App\Http\Controllers\IpController@destroy')->name('ip.delete');
@@ -112,6 +113,7 @@ Route::get('/posts/{id}/destroy', 'App\Http\Controllers\PostsController@destroy'
 // pages
 Route::get('/', [PagesController::class, 'index']);
 Route::get('/about', [PagesController::class, 'about']);
+Route::get('/clock', 'App\Http\Controllers\PagesController@clock')->name('clock');
 Route::get('/pages/contact/{id}', [PagesController::class, 'contact']);
 Route::post('/pages/contact/', 'App\Http\Controllers\PagesController@telegram')->name('telegram');
 Route::get('/pages/coding/{id}', 'App\Http\Controllers\PagesController@coding')->name('form');

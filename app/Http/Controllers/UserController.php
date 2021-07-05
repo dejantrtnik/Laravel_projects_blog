@@ -17,8 +17,6 @@ class UserController extends Controller
 
   public function index()
   {
-
-
     $data = [
       'title' => 'User profile',
       'users' => DB::table('users')->get(),
@@ -30,19 +28,15 @@ class UserController extends Controller
 
   public function create(Request $request)
   {
-    //dd($request);
     if (auth()->user() == null || auth()->user()->role != 'admin') {
       return redirect('/dashboard');
     }
-
     return view('user.create');
   }
 
 
   public function store(Request $request)
   {
-    //dd($request);
-
     $user = new User();
     if ($user) {
       $user->name = $request['name'];
@@ -54,7 +48,6 @@ class UserController extends Controller
     }else {
       return redirect()->back();
     }
-
     return redirect('/admin/users')->with('success', 'User creted');
   }
 
@@ -69,9 +62,7 @@ class UserController extends Controller
     | collecting ip numbers in db
     */
     ip_collect();
-
     $user = User::find($id);
-
     $data = [
       'user' => User::find($id),
       'posts' => Post::orderBy('id', 'desc')->where('user_id', $id)->get(),
@@ -84,8 +75,6 @@ class UserController extends Controller
     }else {
       return redirect('/user')->with('error', 'Unauthorized page');
     }
-
-
   }
 
 
@@ -98,8 +87,7 @@ class UserController extends Controller
     | /var/www/html/config/custom_functions.php
     | collecting ip numbers in db
     */
-    //ip_collect();
-
+    ip_collect();
     if (Auth::user()) {
       $user = User::find($id);
 
@@ -152,6 +140,10 @@ class UserController extends Controller
 
   public function destroy($id)
   {
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/');
+    }
+
     if ( auth()->user()->role == 'admin') {
       $user = User::find($id);
 
@@ -169,6 +161,9 @@ class UserController extends Controller
 
   public function search(Request $request)
   {
+    if (auth()->user() == null || auth()->user()->role != 'admin') {
+      return redirect('/');
+    }
     /*
     |--------------------------------------------------------------------------
     | ip_collect()

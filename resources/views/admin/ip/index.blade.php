@@ -49,55 +49,55 @@ form{
         $query_black_list = DB::table('black_list')->where('ip', $ips->ip)->get();
         $query_white_list = DB::table('white_list')->where('ip', $ips->ip)->get();
         $date = date("d.m.Y - H:i:s", strtotime($ips->created_at));
-        @endphp
-        <tbody>
-          <tr>
-            <th><a href="/admin/ip/{{ $ips->ipStrlen }}">{{ $ips->ipStrlen }}</a></th>
-            <th><a href="/admin/ip/country/{{ $ips->country }}">{{ $ips->country }}</a></th>
-            <th>{{ $ips->ip }}</th>
-            <th>{{ $ips->city }}</th>
-            <th>{{ $ips->latitude }}</th>
-            <th>{{ $ips->longitude }}</th>
-            <th>{{ $date }}</th>
-            <th>
-              <form class="" action="{{ route('white_list') }}" method="post">
-                @csrf
-                <input type="text" name="white_list_ip" value="{{ $ips->ip }}" hidden>
-                <button type="submit" class="fas fa-database" style="color: green;" name="button"></button>
-              </form>
-            </th>
-            <th style="color: green;">
-              @foreach ($query_white_list as $key => $value)
-                @if ($key == 0)
-                  {{ 'allowed' }}
-                @endif
-              @endforeach
-            </th>
-            <th>
-              <form class="" action="{{ route('black_list') }}" method="post" onchange='this.form.submit()'>
-                @csrf
-                <input type="text" name="black_list_ip" value="{{ $ips->ip }}" hidden>
-                <button type="submit" class="fas fa-database" style="color: red;" name="button"></button>
-              </form>
-            </th>
-            <th style="color: red;">
-              @foreach ($query_black_list as $key => $value)
-                @if ($key == 0)
-                  {{ 'blocked' }}
-                @endif
-              @endforeach
-            </th>
+      @endphp
+      <tbody>
+        <tr>
+          <th><a href="/admin/ip/{{ $ips->ipStrlen }}">{{ $ips->ipStrlen }}</a></th>
+          <th><a href="/admin/ip/country/{{ $ips->country }}">{{ $ips->country }}</a></th>
+          <th>{{ $ips->ip }}</th>
+          <th>{{ $ips->city }}</th>
+          <th>{{ $ips->latitude }}</th>
+          <th>{{ $ips->longitude }}</th>
+          <th>{{ $date }}</th>
+          <th>
+            <form class="" action="{{ route('white_list') }}" method="post">
+              @csrf
+              <input type="text" name="white_list_ip" value="{{ $ips->ip }}" hidden>
+              <button type="submit" class="fas fa-database" style="color: green;" name="button"></button>
+            </form>
+          </th>
+          <th style="color: green;">
+            @foreach ($query_white_list as $key => $value)
+              @if ($key == 0)
+                {{ 'allowed' }}
+              @endif
+            @endforeach
+          </th>
+          <th>
+            <form class="" action="{{ route('black_list') }}" method="post" onchange='this.form.submit()'>
+              @csrf
+              <input type="text" name="black_list_ip" value="{{ $ips->ip }}" hidden>
+              <button type="submit" class="fas fa-database" style="color: red;" name="button"></button>
+            </form>
+          </th>
+          <th style="color: red;">
+            @foreach ($query_black_list as $key => $value)
+              @if ($key == 0)
+                {{ 'blocked' }}
+              @endif
+            @endforeach
+          </th>
 
-          </tr>
-        </tbody>
-      @endforeach
-    </table>
+        </tr>
+      </tbody>
+    @endforeach
+  </table>
 
-    <br><hr><br>
+  <br><hr><br>
 
-  </body>
+</body>
 
-  <script type="text/javascript">
+<script type="text/javascript">
   ;(function($){
 
     /**
@@ -127,6 +127,6 @@ form{
       $('form').scrollPosReaload();
     });
   }(jQuery));
-  </script>
+</script>
 
 @endsection

@@ -17,7 +17,7 @@ foreach ($comments as $key => $comment) {
 @section('body')
   <div class="container">
     <hr>
-    <a class="btn btn-primary" href="/posts">Back</a>
+    <a class="btn btn-primary" href="{{ url()->previous() }}">Back</a>
     @if (!Auth::guest())
       @if (Auth::user()->id == $post->user_id || auth()->user()->role == 'admin' )
         <a href="{{ route('posts.delete', $post->id) }}" class="btn btn-danger float-right ml-2" onclick="return confirm('Are you sure you want to delete this post? \n{{ $post->title }}');">Delete</a>

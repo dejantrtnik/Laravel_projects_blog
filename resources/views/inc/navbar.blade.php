@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm navbar-static-top">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -20,7 +21,13 @@
         <a class="nav-link" href="/about">About</a>
       </li>
     </ul>
+  </div>
 
+  <ul class="navbar-nav justify-content-center">
+    <a href="{{ route('clock') }}" class="nav-link" id="clock"></a>
+  </ul>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
     <!-- Right Side Of Navbar -->
     <ul class="navbar-nav ml-auto">
       <!-- Authentication Links -->
@@ -42,9 +49,6 @@
           <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             {{ Auth::user()->name }}
           </a>
-
-
-
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             @if (auth()->user()->role == 'admin')
               <a class="dropdown-item" href="/admin">Admin dashboard</a><hr>
@@ -71,8 +75,22 @@
       </li>
     @endguest
   </ul>
+
+
 </div>
 </nav>
+<script type="text/javascript">
+var span = document.getElementById('clock');
+function time() {
+  var d = new Date();
+  var s = d.getSeconds();
+  var m = d.getMinutes();
+  var h = d.getHours();
+  span.textContent =
+  ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+}
+setInterval(time, 1000);
+</script>
 
 <script>
   $(function($) {

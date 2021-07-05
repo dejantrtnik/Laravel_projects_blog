@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\ipInfos;
 use App\Models\visits;
 use App\Models\User;
+use App\Models\Post;
 use DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -23,25 +24,12 @@ class PagesController extends Controller
     */
     ip_collect();
 
-
-    function rpi(){
-
-      if (@file_get_contents('http://192.168.0.147/moduliRPI/sensor_H2O.php') === false) {
-        return 'empty temp';
-      }
-      else {
-        return @file_get_contents('http://192.168.0.147/moduliRPI/sensor_H2O.php');
-      }
-    }
-
-
-    //dd(rpi());
-
     $data = [
       'title' => 'This is about',
       'ip' => request()->server('SERVER_ADDR'),
       'request_url' => request()->server('REQUEST_URI'),
       'temp_data_rpi' => rpi(),
+      'posts' => Post::orderBy('id', 'desc')->limit(5)->get(),
       //'temp_data_rpi' => 'temp',
     ];
 
@@ -114,7 +102,7 @@ class PagesController extends Controller
     ip_collect();
 
     $data = [
-    'title' => 'Welcome',
+    'title' => 'Login as:',
     'users' => User::all(),
     'request_url' => request()->server('REQUEST_URI'),
     ];
@@ -185,12 +173,20 @@ class PagesController extends Controller
 
   public function coding($id)
   {
+    /*
+    |--------------------------------------------------------------------------
+    | ip_collect()
+    |--------------------------------------------------------------------------
+    | /var/www/html/config/custom_functions.php
+    | collecting ip numbers in db
+    */
+    ip_collect();
+
     $data = [
     'title' => $id,
     'maintenance' => 'in progress',
     'services' => ['one', 'two']
     ];
-    //return view('pages.services');
     return view('pages.coding.form')->with($data);
   }
 
@@ -209,15 +205,27 @@ class PagesController extends Controller
       return redirect('/login');
     }
     $data = [
-    'title' => 'show_video',
-    'video' => 'http://193.77.83.59:4747/video',
-
+      'title' => 'show_video',
+      'video' => 'https://193.77.83.59:4747/video',
+      'img' => photo_ip_cam(),
     ];
-    //return view('pages.services');
     return view('pages.show_video')->with($data);
   }
 
-
-
+  public function clock()
+  {
+    /*
+    |--------------------------------------------------------------------------
+    | ip_collect()
+    |--------------------------------------------------------------------------
+    | /var/www/html/config/custom_functions.php
+    | collecting ip numbers in db
+    */
+    ip_collect();
+    $data = [
+    'title' => 'clock',
+    ];
+    return view('pages.clock')->with($data);
+  }
 
 }

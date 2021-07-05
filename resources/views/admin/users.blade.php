@@ -2,12 +2,8 @@
 
 @section('body')
 <h1>User ADMIN dashboard</h1>
-
 @foreach ($users as $user)
 @endforeach
-
-
-
 
 <!-- Search user-->
 <div class="row">
@@ -35,15 +31,13 @@
         <th></th>
       </thead>
     </tr>
-
     @foreach ($users as $user)
         <tr>
             <th>{{ $user->id }}</th>
             <th>{{ $user->name }}</th>
-
-
             <th><a href="/user/{{ $user->id }}" class="btn btn-primary">Show profile</a></th>
             <th><a href="/admin/show/{{ $user->id }}" class="btn btn-primary">Show posts by user</a></th>
+            <th><a href="/admin/ip/user/{{ $user->id }}" class="btn btn-primary">Show request url</a></th>
             @if ( $user->role != "admin" )
               <form class="" action="{{ route('edit_role',  $user->id) }}" method="get">
                 @csrf
@@ -51,9 +45,11 @@
                 <th>
                   <select class="form-control" action="" name="role">
                     <option style="color: red;" name="role" value="{{ $user->role }}">{{ $user->role }}</option>
-                    <option value=""></option>
+                    <optgroup label="______________">
                     <option style="color: red;" name="role" value="guest">guest</option>
                     <option name="role" value="member">member</option>
+                    <option name="role" value="blocked">BLOCKED</option>
+                    <optgroup label="______________">
                     <option name="role" value="admin">admin</option>
                   </select>
                 </th>

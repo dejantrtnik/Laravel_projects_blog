@@ -21,6 +21,9 @@
             </thead>
             <tbody>
               @foreach ($devices as $device)
+                @php
+                  $ipStrlen = post_slug($device->ip_address);
+                @endphp
                 <tr>
                   @foreach ($users as $key => $user)
                     @if ($user->id == $device->user_id)
@@ -32,7 +35,7 @@
                   @endif
                   <td>{{ $device->id }}</td>
                   <td>{{ $device->user_agent }}</td>
-                  <td>{{ $device->ip_address }}</td>
+                  <td><a href="/admin/ip/{{ $ipStrlen }}">{{ $device->ip_address }}</a></td>
                   <td>{{ Carbon\Carbon::parse($device->last_activity)->diffForHumans() }}</td>
                   @if ($current_session_id == $device->id)
                     <td><span>Admin user</span></td>

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -33,18 +32,22 @@ class PostsController extends Controller
     function comment_count(){
       //$query = [];
       $query = DB::select("SELECT id_post FROM comments");
-
       return $query;
     }
 
+
+    //dd(photo_ip_cam());
     $data = [
       'title' => 'This is Project',
       'request_url' => request()->server('REQUEST_URI'),
       'posts' => Post::orderBy('id', 'desc')->paginate(5),
+      'posts_last_updated' => Post::orderBy('updated_at', 'desc')->paginate(5),
       'post_count' => Post::all(),
       'user' => User::all(),
       'comments' => Comments::All(),
       'comment_count' => comment_count(),
+      'img' => photo_ip_cam(),
+      'temp_data_rpi' => rpi(),
     ];
     return view('posts.index')->with($data);
 
@@ -179,23 +182,10 @@ class PostsController extends Controller
     */
     ip_collect();
 
-
     $post = Post::find($id);
-    // check for correct user
-    // if(auth()->user()->id !== $post->id && auth()->user()->role !== 'admin'){
-    //     return redirect('/posts')->with('error', 'Unauthorized page');
-    // }
-
     if(auth()->user()->id == $post->user_id || auth()->user()->role == 'admin'){
       return view('posts.edit')->with('post', $post);
     }
-
-    // if(auth()->user()->id == $post->user_id){
-    //     return view('posts.edit')->with('post', $post);
-    // }elseif (auth()->user()->role == 'admin'){
-    //     return view('posts.edit')->with('post', $post);
-    // }
-
     return redirect('/posts')->with('error', 'Unauthorized page');
   }
 
@@ -249,7 +239,6 @@ class PostsController extends Controller
     $post = Post::find($id);
 
     // comments below post deletes "ralation" CASCADE in db
-
     // check for correct user
     if(auth()->user()->id !== $post->id && auth()->user()->role !== 'admin'){
       if (auth()->user()->id == $post->user_id) {
